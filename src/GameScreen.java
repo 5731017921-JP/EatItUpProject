@@ -1,3 +1,4 @@
+
 /**
  * @author Jirut Polohaul (5731017921) 
  * @version 3 Apr 2015
@@ -39,19 +40,42 @@ public class GameScreen extends JComponent {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				InputUtility.setSpacePressed(false);
+
 			}
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-					InputUtility.setSpacePressed(true);
-					
-						logic.hitButton(logic.getStudent1(),logic.getTeacher());
+				if (e.getKeyCode() == KeyEvent.VK_A) {
+					if (!InputUtility.isaTriggered()) {
+						InputUtility.setaTriggered(true);
+						InputUtility.setdTriggered(false);
+						logic.hitButton(logic.getStudent1(), logic.getTeacher());
+					}
 				}
+				if (e.getKeyCode() == KeyEvent.VK_D) {
+					if (!InputUtility.isdTriggered()) {
+						InputUtility.setdTriggered(true);
+						InputUtility.setaTriggered(false);
+						logic.hitButton(logic.getStudent1(), logic.getTeacher());
+					}
+				}
+				if (e.getKeyCode() == KeyEvent.VK_J) {
+					if (!InputUtility.isjTriggered()) {
+						InputUtility.setjTriggered(true);
+						InputUtility.setkTriggered(false);
+						logic.hitButton(logic.getStudent2(), logic.getTeacher());
+					}
+				}
+				if (e.getKeyCode() == KeyEvent.VK_K) {
+					if (!InputUtility.iskTriggered()) {
+						InputUtility.setkTriggered(true);
+						InputUtility.setjTriggered(false);
+						logic.hitButton(logic.getStudent2(), logic.getTeacher());
+					}
+				}
+
 			}
 		});
-
 	}
 
 	private int[] getDrawingParameter(Graphics context, Font font, String status) {
@@ -84,6 +108,7 @@ public class GameScreen extends JComponent {
 			g2d.setColor(Color.WHITE);
 			g2d.setFont(font);
 			g2d.drawString("PRESS", params[4], params[5]);
+			
 		} else {
 			params = getDrawingParameter(g2d, font, "STOP");
 			g2d.setColor(Color.RED);

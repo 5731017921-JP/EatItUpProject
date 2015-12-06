@@ -4,28 +4,72 @@
  * Lab5 part1 (2/2014) in 2110215 Prog Meth
  */
 public class InputUtility {
-	private static boolean spaceTriggered;
-	private static boolean spacePressed;
+	private static boolean aTriggered,dTriggered,jTriggered,kTriggered;
+	
 
-	public static boolean getSpaceTriggered() {
-		return spaceTriggered;
+
+
+	public static boolean isaTriggered() {
+		return aTriggered;
 	}
 
-	public static void setSpaceTriggered(boolean spaceTriggered) {
-		InputUtility.spaceTriggered = spaceTriggered;
+
+
+
+	public static void setaTriggered(boolean aTriggered) {
+		InputUtility.aTriggered = aTriggered;
 	}
 
-	public static boolean getSpacePressed() {
-		return spacePressed;
+
+
+
+	public static boolean isdTriggered() {
+		return dTriggered;
 	}
 
-	public static void setSpacePressed(boolean spacePressed) {
-		InputUtility.spacePressed = spacePressed;
+
+
+
+	public static void setdTriggered(boolean dTriggered) {
+		InputUtility.dTriggered = dTriggered;
 	}
+
+
+
+
+	public static boolean isjTriggered() {
+		return jTriggered;
+	}
+
+
+
+
+	public static void setjTriggered(boolean jTriggered) {
+		InputUtility.jTriggered = jTriggered;
+	}
+
+
+
+
+	public static boolean iskTriggered() {
+		return kTriggered;
+	}
+
+
+
+
+	public static void setkTriggered(boolean kTriggered) {
+		InputUtility.kTriggered = kTriggered;
+	}
+
+
+
 
 	public InputUtility() {
-		InputUtility.spacePressed = false;
-		InputUtility.spaceTriggered = false;
+		InputUtility.aTriggered = false;
+		InputUtility.dTriggered = false;
+		InputUtility.jTriggered = false;
+		InputUtility.kTriggered = false;
 	}
 
 }

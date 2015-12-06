@@ -50,10 +50,10 @@ public class Student implements IRenderableObject {
 	}
 	
 	public Student(){
-		int score = 0;
-		boolean pause = false;
-		boolean gameOver = false;
-		int remainingTime = 180;
+		score = 0;
+		pause = false;
+		gameOver = false;
+		remainingTime = 180;
 	}
 	
 	public void plusScore(){
