@@ -1,12 +1,31 @@
 
 public class GameLogic {
-	public GameLogic(Student a,Teacher b){
-		a = new Student();
-		b = new Teacher();
+	Student student1;
+	Student student2;
+	Teacher teacher;
+	
+	public Student getStudent1() {
+		return student1;
 	}
-	public GameLogic(Student a,Student a2,Teacher b){
-		a = new Student();
-		b = new Teacher();
+	public void setStudent1(Student student1) {
+		this.student1 = student1;
+	}
+	public Student getStudent2() {
+		return student2;
+	}
+	public void setStudent2(Student student2) {
+		this.student2 = student2;
+	}
+	public Teacher getTeacher() {
+		return teacher;
+	}
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
+	}
+	public GameLogic(){
+		student1 = new Student();
+		student2 = new Student();
+		teacher = new Teacher();
 	}
 	public void hitButton(Student a, Teacher b) {
 		if (!b.isLooking()) {

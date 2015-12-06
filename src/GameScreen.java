@@ -47,7 +47,7 @@ public class GameScreen extends JComponent {
 				if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 					InputUtility.setSpacePressed(true);
 					
-						logic.hitButton();
+						logic.hitButton(logic.getStudent1(),logic.getTeacher());
 				}
 			}
 		});
@@ -75,9 +75,9 @@ public class GameScreen extends JComponent {
 		g2d.clearRect(0, 0, 300, 300);
 		g2d.setColor(Color.WHITE);
 		g2d.setFont(smallfont);
-		g2d.drawString("SCORE: " + logic.getScore(), 5, 295);
+		g2d.drawString("SCORE: " + logic.getStudent1().getScore(), 5, 295);
 		int[] params = new int[6];
-		if (logic.isHittingTime()) {
+		if (!logic.getTeacher().isLooking()) {
 			params = getDrawingParameter(g2d, font, "PRESS");
 			g2d.setColor(Color.BLUE);
 			g2d.fillRect(params[0], params[1], params[2], params[3]);

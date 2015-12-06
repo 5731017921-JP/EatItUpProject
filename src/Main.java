@@ -23,7 +23,7 @@ public class Main {
 			} catch (InterruptedException e) {
 			}
 			screen.repaint();
-			logic.update();
+			logic.update(logic.getStudent1(),logic.getTeacher());
 		}
 	}
 }
