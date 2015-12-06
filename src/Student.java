@@ -55,6 +55,14 @@ public class Student implements IRenderableObject {
 		boolean gameOver = false;
 		int remainingTime = 180;
 	}
+	
+	public void plusScore(){
+		score++;
+	}
+	
+	public void update(){
+		
+	}
 
 	@Override
 	public int getZ() {

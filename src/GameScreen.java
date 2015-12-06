@@ -46,8 +46,8 @@ public class GameScreen extends JComponent {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 					InputUtility.setSpacePressed(true);
-					logic.hitButton();
 					
+						logic.hitButton();
 				}
 			}
 		});
