@@ -1,4 +1,7 @@
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+
+import javax.imageio.ImageIO;
 
 public class Student implements IRenderableObject {
 	int score;
@@ -6,9 +9,29 @@ public class Student implements IRenderableObject {
 	boolean gameOver;
 	int remainingTime;
 	boolean eating;
+	int life;
 	int x;
 	int y;
+	BufferedImage ready;
+	BufferedImage eat1;
+	public int getLife() {
+		return life;
+	}
 
+	public void setLife(int life) {
+		this.life = life;
+	}
+
+	public BufferedImage getCurrentImage() {
+		return currentImage;
+	}
+
+	public void setCurrentImage(BufferedImage currentImage) {
+		this.currentImage = currentImage;
+	}
+
+	BufferedImage eat2;
+	BufferedImage currentImage;
 	public int getRemainingTime() {
 		return remainingTime;
 	}
@@ -42,18 +65,32 @@ public class Student implements IRenderableObject {
 	}
 
 	public boolean isGameOver() {
-		return gameOver;
+		if(this.life == 0){
+			return true;
+		}
+		return false;
 	}
 
 	public void setGameOver(boolean gameOver) {
 		this.gameOver = gameOver;
 	}
 	
-	public Student(){
+	public Student(int x,int y){
 		score = 0;
 		pause = false;
 		gameOver = false;
 		remainingTime = 180;
+		this.x = x;
+		this.y = y;
+		this.life = 5;
+		try {
+			ClassLoader loader = Main.class.getClassLoader();
+			ready = ImageIO.read(loader.getResource("ready.png"));
+			eat1 = ImageIO.read(loader.getResource("eating1.jpg"));
+			eat2 = ImageIO.read(loader.getResource("eating2.jpg"));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+		}
 	}
 	
 	public void plusScore(){
@@ -72,7 +109,21 @@ public class Student implements IRenderableObject {
 
 	@Override
 	public void render(Graphics2D g2) {
-		
+		if(currentImage == null){
+			this.setCurrentImage(eat1);
+		}
+		else if(currentImage == eat1){
+			this.setCurrentImage(eat2);
+		}
+		else if(currentImage == eat2){
+			this.setCurrentImage(eat1);
+		}
+		if(this.isEating()){
+			g2.drawImage(currentImage, null, this.x, this.y);
+		}
+		else {
+			g2.drawImage(ready, null, this.x, this.y);
+		}
 		
 	}
 }

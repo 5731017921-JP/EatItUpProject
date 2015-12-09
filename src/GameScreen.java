@@ -1,9 +1,4 @@
 
-/**
- * @author Jirut Polohaul (5731017921) 
- * @version 3 Apr 2015
- * Lab5 part1 (2/2014) in 2110215 Prog Meth
- */
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -25,7 +20,7 @@ public class GameScreen extends JComponent {
 	public GameScreen(GameLogic logic) {
 		super();
 		setDoubleBuffered(true);
-		setPreferredSize(new Dimension(300, 300));
+		setPreferredSize(new Dimension(1024, 768));
 		this.logic = logic;
 		setVisible(true);
 		setFocusable(true);
@@ -73,7 +68,11 @@ public class GameScreen extends JComponent {
 						logic.hitButton(logic.getStudent2(), logic.getTeacher());
 					}
 				}
-
+				if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+					logic.getStudent1().setEating(false);
+					InputUtility.setaTriggered(false);
+					InputUtility.setdTriggered(false);
+				}
 			}
 		});
 	}
@@ -101,6 +100,7 @@ public class GameScreen extends JComponent {
 		g2d.setFont(smallfont);
 		g2d.drawString("SCORE: " + logic.getStudent1().getScore(), 5, 295);
 		int[] params = new int[6];
+		logic.getStudent1().render(g2d);
 		if (!logic.getTeacher().isLooking()) {
 			params = getDrawingParameter(g2d, font, "PRESS");
 			g2d.setColor(Color.BLUE);

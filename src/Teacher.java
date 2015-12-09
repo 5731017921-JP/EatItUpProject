@@ -3,9 +3,9 @@ import java.awt.Graphics2D;
 public class Teacher implements IRenderableObject{
 	int x;
 	int y;
-	boolean looking;
-	int counter = 0;
-	int stateChangingDelay = random(50, 200);
+	boolean looking = false;
+	int counter = 200;
+	int stateChangingDelay = random(150, 300);
 	public int getX() {
 		return x;
 	}
@@ -36,7 +36,7 @@ public class Teacher implements IRenderableObject{
 		if (counter > 0) {
 			counter--;
 		} else {
-			stateChangingDelay = random(50, 200);
+			stateChangingDelay = random(150, 300);
 			counter = stateChangingDelay;
 			looking = !looking;
 		}
