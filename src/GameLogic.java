@@ -35,15 +35,12 @@ public class GameLogic {
 	}
 
 	public void hitButton(Student a, Teacher b) {
-		if (!a.isGameOver()) {
+		if (!a.isGameOver() && !a.isDecreaseScore()) {
 			a.setEating(true);
 			if (!b.isLooking()) {
 				a.plusScore();
 			}
-			if (b.isLooking()) {
-				a.setLife(a.getLife() - 1);
-				a.setEating(false);
-			}
+		
 		} else {
 
 		}
@@ -52,9 +49,13 @@ public class GameLogic {
 	public void update(Student a, Teacher b) {
 		a.update();
 		b.update();
-		if(b.isLooking() && a.isEating()){
+		if(b.isLooking() && a.isEating() && !a.isDecreaseScore()){
 			a.setLife(a.getLife() - 1);
 			a.setEating(false);
+			a.setDecreaseScore(true);
+		}
+		else if(!b.isLooking()){
+			a.setDecreaseScore(false);
 		}
 	}
 }

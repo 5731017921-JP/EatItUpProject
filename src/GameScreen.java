@@ -98,7 +98,7 @@ public class GameScreen extends JComponent {
 		g2d.clearRect(0, 0, 300, 300);
 		g2d.setColor(Color.WHITE);
 		g2d.setFont(smallfont);
-		g2d.drawString("SCORE: " + logic.getStudent1().getScore(), 5, 295);
+		g2d.drawString("SCORE: " + logic.getStudent1().getScore()+"             LIFE:"+logic.getStudent1().getLife(), 5, 295);
 		int[] params = new int[6];
 		logic.getStudent1().render(g2d);
 		if (!logic.getTeacher().isLooking()) {

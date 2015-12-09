@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 public class Student implements IRenderableObject {
+	boolean decreaseScore;
 	int score;
 	boolean pause;
 	boolean gameOver;
@@ -14,6 +15,15 @@ public class Student implements IRenderableObject {
 	int y;
 	BufferedImage ready;
 	BufferedImage eat1;
+	
+	public boolean isDecreaseScore() {
+		return decreaseScore;
+	}
+
+	public void setDecreaseScore(boolean decreaseScore) {
+		this.decreaseScore = decreaseScore;
+	}
+
 	public int getLife() {
 		return life;
 	}
@@ -83,6 +93,7 @@ public class Student implements IRenderableObject {
 		this.x = x;
 		this.y = y;
 		this.life = 5;
+		this.decreaseScore = false;
 		try {
 			ClassLoader loader = Main.class.getClassLoader();
 			ready = ImageIO.read(loader.getResource("ready.png"));
