@@ -10,7 +10,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		JFrame frame = new JFrame("Button Smasher");
+		JFrame frame = new JFrame("Eat it up");
 		GameLogic logic = new GameLogic();
 		GameScreen screen = new GameScreen(logic);
 		frame.add(screen);

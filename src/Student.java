@@ -3,19 +3,18 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
-public class Student implements IRenderableObject {
-	boolean decreaseScore;
-	int score;
-	boolean pause;
-	boolean gameOver;
-	int remainingTime;
-	boolean eating;
-	int life;
-	int x;
-	int y;
-	BufferedImage ready;
-	BufferedImage eat1;
-	
+public class Student implements IRenderable {
+	private boolean decreaseScore;
+	private int score;
+	private boolean pause;
+	private boolean gameOver;
+	private int remainingTime;
+	private boolean eating;
+	private int life;
+	private int id;
+	private BufferedImage ready, currentImage;
+	private BufferedImage eat1, eat2, eat3, eat4;
+
 	public boolean isDecreaseScore() {
 		return decreaseScore;
 	}
@@ -40,8 +39,6 @@ public class Student implements IRenderableObject {
 		this.currentImage = currentImage;
 	}
 
-	BufferedImage eat2;
-	BufferedImage currentImage;
 	public int getRemainingTime() {
 		return remainingTime;
 	}
@@ -75,7 +72,7 @@ public class Student implements IRenderableObject {
 	}
 
 	public boolean isGameOver() {
-		if(this.life == 0){
+		if (this.life == 0) {
 			return true;
 		}
 		return false;
@@ -84,57 +81,76 @@ public class Student implements IRenderableObject {
 	public void setGameOver(boolean gameOver) {
 		this.gameOver = gameOver;
 	}
-	
-	public Student(int x,int y){
+
+	public Student(int id) {
+		this.id = id;
 		score = 0;
 		pause = false;
 		gameOver = false;
 		remainingTime = 180;
-		this.x = x;
-		this.y = y;
 		this.life = 5;
 		this.decreaseScore = false;
+		ClassLoader loader = Main.class.getClassLoader();
 		try {
-			ClassLoader loader = Main.class.getClassLoader();
-			ready = ImageIO.read(loader.getResource("ready.png"));
-			eat1 = ImageIO.read(loader.getResource("eating1.jpg"));
-			eat2 = ImageIO.read(loader.getResource("eating2.jpg"));
+			if (id == 1) {
+				ready = ImageIO.read(loader.getResource("Blossom-static.png"));
+				eat1 = ImageIO.read(loader.getResource("Blossom-eat1.png"));
+				eat2 = ImageIO.read(loader.getResource("Blossom-eat2.png"));
+				eat3 = ImageIO.read(loader.getResource("Blossom-eat3.png"));
+				eat4 = ImageIO.read(loader.getResource("Blossom-eat4.png"));
+				currentImage = eat1;
+			} else {
+				ready = ImageIO.read(loader.getResource("Buttercup-static.png"));
+				eat1 = ImageIO.read(loader.getResource("Buttercup-eat1.png"));
+				eat2 = ImageIO.read(loader.getResource("Buttercup-eat2.png"));
+				eat3 = ImageIO.read(loader.getResource("Buttercup-eat3.png"));
+				eat4 = ImageIO.read(loader.getResource("Buttercup-eat4.png"));
+				currentImage = eat1;
+			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
-	
-	public void plusScore(){
+
+	public void plusScore() {
 		score++;
 	}
-	
-	public void update(){
-		
+
+	public void update() {
+
 	}
 
 	@Override
 	public int getZ() {
 		// TODO Auto-generated method stub
-		return Integer.MAX_VALUE;
+		return 2;
 	}
 
 	@Override
 	public void render(Graphics2D g2) {
-		if(currentImage == null){
-			this.setCurrentImage(eat1);
-		}
-		else if(currentImage == eat1){
+
+		if (getCurrentImage() == eat1) {
 			this.setCurrentImage(eat2);
-		}
-		else if(currentImage == eat2){
+
+		} else if (getCurrentImage() == eat2) {
+			this.setCurrentImage(eat3);
+		} else if (getCurrentImage() == eat3) {
+			this.setCurrentImage(eat4);
+		} else if (getCurrentImage() == eat4) {
 			this.setCurrentImage(eat1);
 		}
-		if(this.isEating()){
-			g2.drawImage(currentImage, null, this.x, this.y);
+
+		if (isEating()) {
+			g2.drawImage(getCurrentImage(), null, 0, 0);
+
+		} else {
+			g2.drawImage(ready, null, 0, 0);
 		}
-		else {
-			g2.drawImage(ready, null, this.x, this.y);
-		}
-		
+
 	}
+
+	public int getId() {
+		return id;
+	}
+
 }

@@ -7,24 +7,41 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
 public class GameScreen extends JComponent {
 
 	private GameLogic logic;
-	private final Font font = new Font("Tahoma", Font.BOLD, 30);
-	private final Font smallfont = new Font("Tahoma", Font.PLAIN, 20);
-
+	private final Font font = new Font("Jokerman", Font.BOLD, 30);
+	// private final Font smallfont = new Font("Tahoma", Font.PLAIN, 20);
+	private BufferedImage classroomBG,table,staticBook;
 	public GameScreen(GameLogic logic) {
 		super();
 		setDoubleBuffered(true);
-		setPreferredSize(new Dimension(1024, 768));
+		setPreferredSize(new Dimension(720, 480));
 		this.logic = logic;
 		setVisible(true);
 		setFocusable(true);
 		requestFocus();
+
+		ClassLoader loader = Main.class.getClassLoader();
+		try {
+			classroomBG = ImageIO.read(loader.getResource("Classroom.png"));
+			table = ImageIO.read(loader.getResource("Table.png"));
+			staticBook = ImageIO.read(loader.getResource("ontable-3.png"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		RenderableHolder.getInstance().add(logic.getStudent1());
+		RenderableHolder.getInstance().add(logic.getStudent2());
+		RenderableHolder.getInstance().add(logic.getTeacher());
+		RenderableHolder.getInstance().add(logic.getNoodles1());
+		RenderableHolder.getInstance().add(logic.getNoodles2());
 		addKeyListener(new KeyListener() {
 
 			@Override
@@ -77,45 +94,39 @@ public class GameScreen extends JComponent {
 		});
 	}
 
-	private int[] getDrawingParameter(Graphics context, Font font, String status) {
-		int[] params = new int[6];
-		FontMetrics metrics = context.getFontMetrics(font);
-		Rectangle2D rect = metrics.getStringBounds(status, context);
-		int rectHeight = (int) rect.getHeight();
-		params[0] = 0;
-		params[1] = (300 - rectHeight) / 2;
-		params[2] = 300;
-		params[3] = rectHeight;
-		params[4] = (300 - (int) rect.getWidth()) / 2;
-		params[5] = (300 - rectHeight) / 2 + rectHeight - context.getFontMetrics(font).getDescent();
-		return params;
-	}
-
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
-		g2d.setBackground(Color.BLACK);
-		g2d.clearRect(0, 0, 300, 300);
-		g2d.setColor(Color.WHITE);
-		g2d.setFont(smallfont);
-		g2d.drawString("SCORE: " + logic.getStudent1().getScore()+"             LIFE:"+logic.getStudent1().getLife(), 5, 295);
-		int[] params = new int[6];
-		logic.getStudent1().render(g2d);
-		if (!logic.getTeacher().isLooking()) {
-			params = getDrawingParameter(g2d, font, "PRESS");
-			g2d.setColor(Color.BLUE);
-			g2d.fillRect(params[0], params[1], params[2], params[3]);
-			g2d.setColor(Color.WHITE);
-			g2d.setFont(font);
-			g2d.drawString("PRESS", params[4], params[5]);
+		g2d.drawImage(classroomBG, null, 0, 0);
+		g2d.setColor(Color.white);
+		g2d.setFont(font);
+		g2d.drawString("Blossom : "+logic.getStudent1().getScore(),220,90);
+		g2d.drawString("Buttercup : "+logic.getStudent2().getScore(),220,150);
+		
+		for (IRenderable x : RenderableHolder.getInstance().getRenderableList()) {
+			if(x.getZ()<3){
+				x.render(g2d);
+			}
+			else{
+				g2d.drawImage(table, null, 0, 0);
+				g2d.drawImage(staticBook, null, 0, 0);
+				break;
+			}
 			
-		} else {
-			params = getDrawingParameter(g2d, font, "STOP");
-			g2d.setColor(Color.RED);
-			g2d.fillRect(params[0], params[1], params[2], params[3]);
-			g2d.setColor(Color.WHITE);
-			g2d.setFont(font);
-			g2d.drawString("STOP", params[4], params[5]);
 		}
+		for (IRenderable x : RenderableHolder.getInstance().getRenderableList()) {
+			if(x.getZ()>=3){
+				x.render(g2d);
+			}
+			
+		}
+		g2d.setColor(Color.darkGray);
+		g2d.drawString("life:"+logic.getStudent1().getLife(), 5, 475);
+		g2d.drawString("life:"+logic.getStudent2().getLife(), 625, 475);
+		try {
+			Thread.sleep(200);
+		} catch (InterruptedException e) {
+		}
+
 	}
 }
