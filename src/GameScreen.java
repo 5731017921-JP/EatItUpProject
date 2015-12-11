@@ -74,19 +74,24 @@ public class GameScreen extends JComponent {
 				if (e.getKeyCode() == KeyEvent.VK_J) {
 					if (!InputUtility.isjTriggered()) {
 						InputUtility.setjTriggered(true);
-						InputUtility.setkTriggered(false);
+						InputUtility.setlTriggered(false);
 						logic.hitButton(logic.getStudent2(), logic.getTeacher());
 					}
 				}
-				if (e.getKeyCode() == KeyEvent.VK_K) {
-					if (!InputUtility.iskTriggered()) {
-						InputUtility.setkTriggered(true);
+				if (e.getKeyCode() == KeyEvent.VK_L) {
+					if (!InputUtility.islTriggered()) {
+						InputUtility.setlTriggered(true);
 						InputUtility.setjTriggered(false);
 						logic.hitButton(logic.getStudent2(), logic.getTeacher());
 					}
 				}
 				if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 					logic.getStudent1().setEating(false);
+					InputUtility.setaTriggered(false);
+					InputUtility.setdTriggered(false);
+				}
+				if (e.getKeyCode() == KeyEvent.VK_K) {
+					logic.getStudent2().setEating(false);
 					InputUtility.setaTriggered(false);
 					InputUtility.setdTriggered(false);
 				}

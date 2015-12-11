@@ -4,7 +4,7 @@
  * Lab5 part1 (2/2014) in 2110215 Prog Meth
  */
 public class InputUtility {
-	private static boolean aTriggered,dTriggered,jTriggered,kTriggered;
+	private static boolean aTriggered,dTriggered,jTriggered,lTriggered;
 	
 
 
@@ -51,15 +51,15 @@ public class InputUtility {
 
 
 
-	public static boolean iskTriggered() {
-		return kTriggered;
+	public static boolean islTriggered() {
+		return lTriggered;
 	}
 
 
 
 
-	public static void setkTriggered(boolean kTriggered) {
-		InputUtility.kTriggered = kTriggered;
+	public static void setlTriggered(boolean lTriggered) {
+		InputUtility.lTriggered = lTriggered;
 	}
 
 
@@ -69,7 +69,7 @@ public class InputUtility {
 		InputUtility.aTriggered = false;
 		InputUtility.dTriggered = false;
 		InputUtility.jTriggered = false;
-		InputUtility.kTriggered = false;
+		InputUtility.lTriggered = false;
 	}
 
 }
