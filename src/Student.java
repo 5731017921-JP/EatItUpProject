@@ -146,6 +146,7 @@ public class Student implements IRenderable {
 		} else {
 			g2.drawImage(ready, null, 0, 0);
 		}
+		
 
 	}
 

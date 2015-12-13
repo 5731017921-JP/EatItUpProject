@@ -5,6 +5,7 @@ public class GameLogic {
 	private Teacher teacher;
 	private Noodles noodles1;
 	private Noodles noodles2;
+
 	public Student getStudent1() {
 		return student1;
 	}
@@ -43,22 +44,39 @@ public class GameLogic {
 			if (!b.isLooking()) {
 				a.plusScore();
 			}
-		
+
 		} else {
 			return;
 		}
 	}
 
-	public void update(Student a, Teacher b) {
-		a.update();
-		b.update();
-		if(b.isLooking() && a.isEating() && !a.isDecreaseScore()){
-			a.setLife(a.getLife() - 1);
-			a.setEating(false);
-			a.setDecreaseScore(true);
+	public void update(Student a, Student c, Teacher b) {
+		if (c == null) {
+			
+			a.update();
+			b.update();
+			if (b.isLooking() && a.isEating() && !a.isDecreaseScore()) {
+				a.setLife(a.getLife() - 1);
+				a.setEating(false);
+				a.setDecreaseScore(true);
+				System.out.println("logic update");
+			} else if (!b.isLooking()) {
+				a.setDecreaseScore(false);
+			}
 		}
-		else if(!b.isLooking()){
-			a.setDecreaseScore(false);
+		else if(a==null){
+			c.update();
+			b.update();
+			if (b.isLooking() && c.isEating() && !c.isDecreaseScore()) {
+				c.setLife(c.getLife() - 1);
+				c.setEating(false);
+				c.setDecreaseScore(true);
+			} else if (!b.isLooking()) {
+				c.setDecreaseScore(false);
+			}
+		}
+		else{
+			// a and c play together
 		}
 	}
 

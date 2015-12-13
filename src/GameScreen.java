@@ -1,4 +1,3 @@
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -11,14 +10,15 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JComponent;
+import javax.swing.JPanel;
 
-public class GameScreen extends JComponent {
+public class GameScreen extends JPanel {
 
 	private GameLogic logic;
 	private final Font font = new Font("Jokerman", Font.BOLD, 30);
 	// private final Font smallfont = new Font("Tahoma", Font.PLAIN, 20);
-	private BufferedImage classroomBG,table,staticBook;
+	private BufferedImage classroomBG, table, staticBook;
+
 	public GameScreen(GameLogic logic) {
 		super();
 		setDoubleBuffered(true);
@@ -34,7 +34,6 @@ public class GameScreen extends JComponent {
 			table = ImageIO.read(loader.getResource("Table.png"));
 			staticBook = ImageIO.read(loader.getResource("ontable-3.png"));
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		RenderableHolder.getInstance().add(logic.getStudent1());
@@ -94,39 +93,55 @@ public class GameScreen extends JComponent {
 		});
 	}
 
+	public void runGame(int selectedMode) {
+		if (selectedMode == 1) {
+			logic.update(logic.getStudent1(), null, logic.getTeacher());
+			logic.getStudent2().setEating(false);
+		} else if (selectedMode == 2) {
+			logic.update(null, logic.getStudent2(), logic.getTeacher());
+			logic.getStudent1().setEating(false);
+
+		} else {
+			logic.update(logic.getStudent1(), logic.getStudent2(), logic.getTeacher());
+		}
+	}
+
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.drawImage(classroomBG, null, 0, 0);
 		g2d.setColor(Color.white);
 		g2d.setFont(font);
-		g2d.drawString("Blossom : "+logic.getStudent1().getScore(),220,90);
-		g2d.drawString("Buttercup : "+logic.getStudent2().getScore(),220,150);
-		
+		if (Main.selectedMode == 3 || Main.selectedMode == 1) {
+			g2d.drawString("Blossom : " + logic.getStudent1().getScore(), 220, 90);
+			g2d.setColor(Color.darkGray);
+			g2d.drawString("life:" + logic.getStudent1().getLife(), 5, 475);
+		}
+		if (Main.selectedMode == 3 || Main.selectedMode == 2) {
+			g2d.drawString("Buttercup : " + logic.getStudent2().getScore(), 220, 150);
+			g2d.setColor(Color.darkGray);
+
+			g2d.drawString("life:" + logic.getStudent2().getLife(), 625, 475);
+
+		}
+
 		for (IRenderable x : RenderableHolder.getInstance().getRenderableList()) {
-			if(x.getZ()<3){
+			if (x.getZ() < 3) {
 				x.render(g2d);
-			}
-			else{
+			} else {
 				g2d.drawImage(table, null, 0, 0);
 				g2d.drawImage(staticBook, null, 0, 0);
 				break;
 			}
-			
+
 		}
 		for (IRenderable x : RenderableHolder.getInstance().getRenderableList()) {
-			if(x.getZ()>=3){
+			if (x.getZ() >= 3) {
 				x.render(g2d);
 			}
-			
+
 		}
-		g2d.setColor(Color.darkGray);
-		g2d.drawString("life:"+logic.getStudent1().getLife(), 5, 475);
-		g2d.drawString("life:"+logic.getStudent2().getLife(), 625, 475);
-		try {
-			Thread.sleep(200);
-		} catch (InterruptedException e) {
-		}
+		
 
 	}
 }
