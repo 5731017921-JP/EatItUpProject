@@ -18,6 +18,7 @@ public class GameScreen extends JPanel {
 	private final Font font = new Font("Jokerman", Font.BOLD, 30);
 	// private final Font smallfont = new Font("Tahoma", Font.PLAIN, 20);
 	private BufferedImage classroomBG, table, staticBook;
+	private Thread thread;
 
 	public GameScreen(GameLogic logic) {
 		super();
@@ -28,6 +29,26 @@ public class GameScreen extends JPanel {
 		setFocusable(true);
 		requestFocus();
 
+		thread = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				while (true) {
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					logic.getStudent1().setRemainingTime(logic.getStudent1().getRemainingTime() - 1);
+					if (logic.getStudent1().getRemainingTime() <= 0) {
+						logic.getStudent1().setGameOver(true);
+						logic.getStudent1().setRemainingTime(0);
+					}
+				}
+			}
+		});
+		thread.start();
 		ClassLoader loader = Main.class.getClassLoader();
 		try {
 			classroomBG = ImageIO.read(loader.getResource("Classroom.png"));
@@ -99,15 +120,18 @@ public class GameScreen extends JPanel {
 	}
 
 	public void runGame(int selectedMode) {
+
 		if (selectedMode == 1) {
 			logic.update(logic.getStudent1(), logic.getTeacher());
 			logic.getStudent2().setEating(false);
+
 		} else if (selectedMode == 2) {
 			logic.update(logic.getStudent2(), logic.getTeacher());
 			logic.getStudent1().setEating(false);
 
 		} else {
 			logic.update(logic.getStudent1(), logic.getStudent2(), logic.getTeacher());
+
 		}
 	}
 
@@ -128,6 +152,7 @@ public class GameScreen extends JPanel {
 			g2d.setColor(Color.darkGray);
 
 			g2d.drawString("life:" + logic.getStudent2().getLife(), 625, 475);
+			g2d.drawString("time:" + logic.getStudent2().getRemainingTime(), 300, 40);
 
 		}
 
@@ -147,7 +172,6 @@ public class GameScreen extends JPanel {
 			}
 
 		}
-		
 
 	}
 }

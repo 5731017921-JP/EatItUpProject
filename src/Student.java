@@ -8,7 +8,7 @@ public class Student implements IRenderable {
 	private int score;
 	private boolean pause;
 	private boolean gameOver;
-	private int remainingTime;
+	private static int remainingTime;
 	private boolean eating;
 	private int life;
 	private int id;
@@ -44,7 +44,7 @@ public class Student implements IRenderable {
 	}
 
 	public void setRemainingTime(int remainingTime) {
-		this.remainingTime = remainingTime;
+		Student.remainingTime = remainingTime;
 	}
 
 	public boolean isEating() {
@@ -118,11 +118,6 @@ public class Student implements IRenderable {
 
 	public void update() {
 
-				setRemainingTime(getRemainingTime()-1);
-				if(getRemainingTime() <= 0){
-					setGameOver(true);
-					setRemainingTime(0);
-				}
 	}
 		
 

@@ -107,6 +107,6 @@ public class Main {
 				frame.repaint();
 			}
 		}
-
+		
 	}
 }
