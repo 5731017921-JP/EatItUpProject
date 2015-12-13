@@ -121,6 +121,7 @@ public class GameScreen extends JPanel {
 			g2d.drawString("Blossom : " + logic.getStudent1().getScore(), 220, 90);
 			g2d.setColor(Color.darkGray);
 			g2d.drawString("life:" + logic.getStudent1().getLife(), 5, 475);
+			g2d.drawString("time:" + logic.getStudent1().getRemainingTime(), 300, 40);
 		}
 		if (Main.selectedMode == 3 || Main.selectedMode == 2) {
 			g2d.drawString("Buttercup : " + logic.getStudent2().getScore(), 220, 150);
