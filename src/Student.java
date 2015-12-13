@@ -134,10 +134,8 @@ public class Student implements IRenderable {
 
 	@Override
 	public void render(Graphics2D g2) {
-
 		if (getCurrentImage() == eat1) {
 			this.setCurrentImage(eat2);
-
 		} else if (getCurrentImage() == eat2) {
 			this.setCurrentImage(eat3);
 		} else if (getCurrentImage() == eat3) {
@@ -145,7 +143,7 @@ public class Student implements IRenderable {
 		} else if (getCurrentImage() == eat4) {
 			this.setCurrentImage(eat1);
 		}
-
+		
 		if (isEating()) {
 			g2.drawImage(getCurrentImage(), null, 0, 0);
 
