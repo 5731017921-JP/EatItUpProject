@@ -72,7 +72,7 @@ public class Student implements IRenderable {
 	}
 
 	public boolean isGameOver() {
-		if (this.life == 0) {
+		if (this.life == 0 || this.remainingTime == 0) {
 			return true;
 		}
 		return false;
@@ -87,7 +87,7 @@ public class Student implements IRenderable {
 		score = 0;
 		pause = false;
 		gameOver = false;
-		remainingTime = 180;
+		remainingTime = 180*100;
 		this.life = 5;
 		this.decreaseScore = false;
 		ClassLoader loader = Main.class.getClassLoader();
@@ -118,7 +118,13 @@ public class Student implements IRenderable {
 
 	public void update() {
 
+				setRemainingTime(getRemainingTime()-1);
+				if(getRemainingTime() <= 0){
+					setGameOver(true);
+					setRemainingTime(0);
+				}
 	}
+		
 
 	@Override
 	public int getZ() {

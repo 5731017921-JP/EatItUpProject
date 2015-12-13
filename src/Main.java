@@ -1,3 +1,4 @@
+
 /**
  * @author Jirut Polohaul (5731017921) 
  * @version 3 Apr 2015
@@ -11,7 +12,7 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		JFrame frame = new JFrame("Eat it up");
-		GameLogic logic = new GameLogic();
+		TwoPlayerLogic logic = new TwoPlayerLogic();
 		GameScreen screen = new GameScreen(logic);
 		frame.add(screen);
 		frame.setVisible(true);
@@ -23,7 +24,7 @@ public class Main {
 			} catch (InterruptedException e) {
 			}
 			screen.repaint();
-			logic.update(logic.getStudent1(),logic.getStudent2(),logic.getTeacher());
+			logic.update(logic.getStudent1(), logic.getStudent2(), logic.getTeacher());
 		}
 	}
 }

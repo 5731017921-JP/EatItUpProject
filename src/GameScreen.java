@@ -15,11 +15,11 @@ import javax.swing.JComponent;
 
 public class GameScreen extends JComponent {
 
-	private GameLogic logic;
+	private OnePlayerLogic logic;
 	private final Font font = new Font("Jokerman", Font.BOLD, 30);
 	// private final Font smallfont = new Font("Tahoma", Font.PLAIN, 20);
 	private BufferedImage classroomBG,table,staticBook;
-	public GameScreen(GameLogic logic) {
+	public GameScreen(OnePlayerLogic logic) {
 		super();
 		setDoubleBuffered(true);
 		setPreferredSize(new Dimension(720, 480));
@@ -38,10 +38,10 @@ public class GameScreen extends JComponent {
 			e1.printStackTrace();
 		}
 		RenderableHolder.getInstance().add(logic.getStudent1());
-		RenderableHolder.getInstance().add(logic.getStudent2());
+		//RenderableHolder.getInstance().add(logic.getStudent2());
 		RenderableHolder.getInstance().add(logic.getTeacher());
 		RenderableHolder.getInstance().add(logic.getNoodles1());
-		RenderableHolder.getInstance().add(logic.getNoodles2());
+		//RenderableHolder.getInstance().add(logic.getNoodles2());
 		addKeyListener(new KeyListener() {
 
 			@Override
@@ -75,14 +75,14 @@ public class GameScreen extends JComponent {
 					if (!InputUtility.isjTriggered()) {
 						InputUtility.setjTriggered(true);
 						InputUtility.setlTriggered(false);
-						logic.hitButton(logic.getStudent2(), logic.getTeacher());
+						//logic.hitButton(logic.getStudent2(), logic.getTeacher());
 					}
 				}
 				if (e.getKeyCode() == KeyEvent.VK_L) {
 					if (!InputUtility.islTriggered()) {
 						InputUtility.setlTriggered(true);
 						InputUtility.setjTriggered(false);
-						logic.hitButton(logic.getStudent2(), logic.getTeacher());
+						//logic.hitButton(logic.getStudent2(), logic.getTeacher());
 					}
 				}
 				if (e.getKeyCode() == KeyEvent.VK_SPACE) {
@@ -91,7 +91,7 @@ public class GameScreen extends JComponent {
 					InputUtility.setdTriggered(false);
 				}
 				if (e.getKeyCode() == KeyEvent.VK_K) {
-					logic.getStudent2().setEating(false);
+					//logic.getStudent2().setEating(false);
 					InputUtility.setaTriggered(false);
 					InputUtility.setdTriggered(false);
 				}
@@ -106,7 +106,9 @@ public class GameScreen extends JComponent {
 		g2d.setColor(Color.white);
 		g2d.setFont(font);
 		g2d.drawString("Blossom : "+logic.getStudent1().getScore(),220,90);
-		g2d.drawString("Buttercup : "+logic.getStudent2().getScore(),220,150);
+		//g2d.drawString("Buttercup : "+logic.getStudent2().getScore(),220,150);
+		g2d.setColor(Color.black);
+		g2d.drawString("Time :"+ logic.getStudent1().getRemainingTime(),300,30);
 		
 		for (IRenderable x : RenderableHolder.getInstance().getRenderableList()) {
 			if(x.getZ()<3){
@@ -127,9 +129,9 @@ public class GameScreen extends JComponent {
 		}
 		g2d.setColor(Color.darkGray);
 		g2d.drawString("life:"+logic.getStudent1().getLife(), 5, 475);
-		g2d.drawString("life:"+logic.getStudent2().getLife(), 625, 475);
+		//g2d.drawString("life:"+logic.getStudent2().getLife(), 625, 475);
 		try {
-			Thread.sleep(200);
+			Thread.sleep(70);
 		} catch (InterruptedException e) {
 		}
 
