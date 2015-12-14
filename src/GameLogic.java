@@ -104,7 +104,6 @@ public class GameLogic {
 	}
 
 	public void update(Student a, Teacher b) {
-		a.update();
 		
 
 		if (b.isLooking() && a.isEating() && !a.isDecreaseScore()) {
@@ -118,8 +117,7 @@ public class GameLogic {
 	}
 
 	public void update(Student a, Student c, Teacher b) {
-		a.update();
-		c.update();
+	
 		
 		if (b.isLooking() && a.isEating() && !a.isDecreaseScore()) {
 			a.setLife(a.getLife() - 1);

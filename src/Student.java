@@ -115,10 +115,6 @@ public class Student implements IRenderable {
 	public void plusScore() {
 		score++;
 	}
-
-	public void update() {
-
-	}
 		
 
 	@Override
