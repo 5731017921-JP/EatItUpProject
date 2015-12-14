@@ -11,10 +11,11 @@ import javax.swing.*;
 import java.applet.AudioClip;
 
 public class GameTitle extends JPanel {
-	private BufferedImage bg1,bg2,bg3,bg4,bg5,bg6,bg7;
+	private BufferedImage bg1, bg2, bg3, bg4, bg5, bg6, bg7, howToPlay;
 	public AudioClip titleSong;
+	private boolean howToPlayClicked;
 	private int paintCounter;
-	
+
 	public GameTitle() {
 		super();
 		setPreferredSize(new Dimension(720, 480));
@@ -30,49 +31,60 @@ public class GameTitle extends JPanel {
 			bg5 = ImageIO.read(loader.getResource("bg5.png"));
 			bg6 = ImageIO.read(loader.getResource("bg6.jpg"));
 			bg7 = ImageIO.read(loader.getResource("bg7.jpg"));
+			howToPlay = ImageIO.read(loader.getResource("HowToPlay.jpg"));
 			titleSong = Applet.newAudioClip((loader.getResource("titlesong.wav")).toURI().toURL());
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-		paintCounter=20;
-		
+		paintCounter = 20;
+		howToPlayClicked = false;
+
 	}
-	public int paintDelayCount(){
+
+	public int paintDelayCount() {
 		return paintCounter++;
 	}
+
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
-		
-		if(paintCounter<=100){
-			g2d.drawImage(bg1,null,0,0);
-			paintDelayCount();
-		}
-		else if(paintCounter<=150){
-			g2d.drawImage(bg2,null,0,0);
-			paintDelayCount();
-		}
-		else if(paintCounter<=200){
-			g2d.drawImage(bg3,null,0,0);
-			paintDelayCount();
-		}
-		else if(paintCounter<=250){
-			g2d.drawImage(bg4,null,0,0);
-			paintDelayCount();
-		}
-		else{
-			if(paintCounter%100<33){
-			g2d.drawImage(bg5,null,0,0);
-			paintDelayCount();}
-			else if(paintCounter%100<66){
-				g2d.drawImage(bg6,null,0,0);
+		if (isHowToPlayClicked()) {
+			g2d.drawImage(howToPlay, null, 0, 0);
+		} else {
+
+			if (paintCounter <= 100) {
+				g2d.drawImage(bg1, null, 0, 0);
 				paintDelayCount();
-			}
-			else{
-				g2d.drawImage(bg7,null,0,0);
+			} else if (paintCounter <= 150) {
+				g2d.drawImage(bg2, null, 0, 0);
 				paintDelayCount();
+			} else if (paintCounter <= 200) {
+				g2d.drawImage(bg3, null, 0, 0);
+				paintDelayCount();
+			} else if (paintCounter <= 250) {
+				g2d.drawImage(bg4, null, 0, 0);
+				paintDelayCount();
+			} else {
+				if (paintCounter % 100 < 33) {
+					g2d.drawImage(bg5, null, 0, 0);
+					paintDelayCount();
+				} else if (paintCounter % 100 < 66) {
+					g2d.drawImage(bg6, null, 0, 0);
+					paintDelayCount();
+				} else {
+					g2d.drawImage(bg7, null, 0, 0);
+					paintDelayCount();
+				}
 			}
 		}
 
+	}
+
+	public boolean isHowToPlayClicked() {
+		return howToPlayClicked;
+	}
+
+	public void setHowToPlayClicked(boolean howToPlayIsClicked) {
+		this.howToPlayClicked = howToPlayIsClicked;
 	}
 }

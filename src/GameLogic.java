@@ -7,7 +7,32 @@ public class GameLogic {
 	private Noodles noodles2;
 	private Thread timeCount;
 	private Thread lookableTeacher;
+	public Thread getTimeCount() {
+		return timeCount;
+	}
 
+	public void setTimeCount(Thread timeCount) {
+		this.timeCount = timeCount;
+	}
+
+	public Thread getLookableTeacher() {
+		return lookableTeacher;
+	}
+
+	public void setLookableTeacher(Thread lookableTeacher) {
+		this.lookableTeacher = lookableTeacher;
+	}
+
+	private boolean gameOver;
+
+
+	public boolean isGameOver() {
+		return gameOver;
+	}
+
+	public void setGameOver(boolean gameOver) {
+		this.gameOver = gameOver;
+	}
 
 	public Student getStudent1() {
 		return student1;
@@ -39,10 +64,11 @@ public class GameLogic {
 		teacher = new Teacher();
 		noodles1 = new Noodles(student1);
 		noodles2 = new Noodles(student2);
+		gameOver = false;
 		lookableTeacher = new Thread(new Runnable() {
 
 			@Override
-			public void run() {
+			public synchronized void run() {
 				while (true) {
 					try {
 						Thread.sleep(30);
@@ -65,13 +91,12 @@ public class GameLogic {
 				}
 			}
 		});
-		lookableTeacher.start();
 		
 
 		timeCount = new Thread(new Runnable() {
 
 			@Override
-			public void run() {
+			public synchronized void run() {
 				while (true) {
 					try {
 						Thread.sleep(1000);
@@ -81,18 +106,17 @@ public class GameLogic {
 					}
 					getStudent1().setRemainingTime(getStudent1().getRemainingTime() - 1);
 					if (getStudent1().getRemainingTime() <= 0) {
-						getStudent1().setGameOver(true);
+						setGameOver(true);
 						getStudent1().setRemainingTime(0);
 					}
 				}
 			}
 		});
-		timeCount.start();
 		
 	}
 
 	public void hitButton(Student a, Teacher b) {
-		if (!a.isGameOver() && !a.isDecreaseScore()) {
+		if (!isGameOver() && !a.isDecreaseScore()) {
 			a.setEating(true);
 			if (!b.isLooking()) {
 				a.plusScore();
@@ -149,5 +173,20 @@ public class GameLogic {
 
 	public void setNoodles2(Noodles noodles2) {
 		this.noodles2 = noodles2;
+	}
+	
+	public String winnerName(){
+		if(Main.selectedMode == 3) {
+			if(getStudent1().getScore() > getStudent2().getScore()){
+				return "blossom";
+			}
+			else if (getStudent1().getScore() < getStudent2().getScore()){
+				return "buttercup";
+			} else {
+				return "equal";
+			}
+		}
+		else
+			return "no";
 	}
 }

@@ -114,6 +114,7 @@ public class GameScreen extends JPanel {
 			logic.update(logic.getStudent1(), logic.getStudent2(), logic.getTeacher());
 
 		}
+		
 	}
 
 	public void paintComponent(Graphics g) {
