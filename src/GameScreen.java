@@ -18,8 +18,7 @@ public class GameScreen extends JPanel {
 	private final Font font = new Font("Jokerman", Font.BOLD, 30);
 	// private final Font smallfont = new Font("Tahoma", Font.PLAIN, 20);
 	private BufferedImage classroomBG, table, staticBook;
-	private Thread thread;
-
+	
 	public GameScreen(GameLogic logic) {
 		super();
 		setDoubleBuffered(true);
@@ -28,27 +27,7 @@ public class GameScreen extends JPanel {
 		setVisible(true);
 		setFocusable(true);
 		requestFocus();
-
-		thread = new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				while (true) {
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					logic.getStudent1().setRemainingTime(logic.getStudent1().getRemainingTime() - 1);
-					if (logic.getStudent1().getRemainingTime() <= 0) {
-						logic.getStudent1().setGameOver(true);
-						logic.getStudent1().setRemainingTime(0);
-					}
-				}
-			}
-		});
-		thread.start();
+		
 		ClassLoader loader = Main.class.getClassLoader();
 		try {
 			classroomBG = ImageIO.read(loader.getResource("Classroom.png"));

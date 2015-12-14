@@ -13,6 +13,7 @@ public class Main {
 	// public static JPanel first = new JPanel();
 	public static boolean isClicked = false;
 	public static int selectedMode;
+	private static GameScreen screen;
 
 	public static void main(String[] args) {
 		// first.setLayout(cards);
@@ -27,10 +28,8 @@ public class Main {
 		selectBS.setPreferredSize(new Dimension(240, 40));
 		JButton selectBC = new JButton("Select Buttercup");
 		selectBC.setPreferredSize(new Dimension(240, 40));
-		GameLogic logic = new GameLogic();
-		GameScreen screen = new GameScreen(logic);
 		titlePanel.setLayout(new BorderLayout());
-
+		screen = null;
 		JPanel north = new JPanel();
 		north.setLayout(new BorderLayout());
 		north.add(selectBS, BorderLayout.WEST);
@@ -48,6 +47,8 @@ public class Main {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				GameLogic logic = new GameLogic();
+				screen = new GameScreen(logic);
 				isClicked = true;
 				title.titleSong.stop();
 				frame.remove(titlePanel);
@@ -63,6 +64,8 @@ public class Main {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				GameLogic logic = new GameLogic();
+				screen = new GameScreen(logic);
 				isClicked = true;
 				title.titleSong.stop();
 				frame.remove(titlePanel);
@@ -78,6 +81,8 @@ public class Main {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				GameLogic logic = new GameLogic();
+				screen = new GameScreen(logic);
 				isClicked = true;
 				title.titleSong.stop();
 				frame.remove(titlePanel);

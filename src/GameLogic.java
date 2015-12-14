@@ -5,6 +5,9 @@ public class GameLogic {
 	private Teacher teacher;
 	private Noodles noodles1;
 	private Noodles noodles2;
+	private Thread timeCount;
+	private Thread lookableTeacher;
+
 
 	public Student getStudent1() {
 		return student1;
@@ -36,6 +39,56 @@ public class GameLogic {
 		teacher = new Teacher();
 		noodles1 = new Noodles(student1);
 		noodles2 = new Noodles(student2);
+		lookableTeacher = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				while (true) {
+					try {
+						Thread.sleep(30);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					if (getTeacher().counter > 0) {
+						getTeacher().counter--;
+					} else {
+						getTeacher();
+						getTeacher().stateChangingDelay = Teacher.random(150, 300);
+						getTeacher().counter = getTeacher().stateChangingDelay;
+						getTeacher().setLooking(!getTeacher().isLooking);
+						if (getTeacher().isLooking) {
+							getTeacher().switching++;
+						}
+					}
+
+				}
+			}
+		});
+		lookableTeacher.start();
+		
+
+		timeCount = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				while (true) {
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					getStudent1().setRemainingTime(getStudent1().getRemainingTime() - 1);
+					if (getStudent1().getRemainingTime() <= 0) {
+						getStudent1().setGameOver(true);
+						getStudent1().setRemainingTime(0);
+					}
+				}
+			}
+		});
+		timeCount.start();
+		
 	}
 
 	public void hitButton(Student a, Teacher b) {
@@ -52,7 +105,7 @@ public class GameLogic {
 
 	public void update(Student a, Teacher b) {
 		a.update();
-		b.update();
+		
 
 		if (b.isLooking() && a.isEating() && !a.isDecreaseScore()) {
 			a.setLife(a.getLife() - 1);
@@ -67,7 +120,7 @@ public class GameLogic {
 	public void update(Student a, Student c, Teacher b) {
 		a.update();
 		c.update();
-		b.update();
+		
 		if (b.isLooking() && a.isEating() && !a.isDecreaseScore()) {
 			a.setLife(a.getLife() - 1);
 			a.setEating(false);

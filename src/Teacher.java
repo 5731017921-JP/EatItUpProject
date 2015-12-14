@@ -51,22 +51,10 @@ public class Teacher implements IRenderable {
 		this.isLooking = looking;
 	}
 
-	private static int random(int start, int end) {
+	public static int random(int start, int end) {
 		return start + (int) (Math.random() * (end - start + 1));
 	}
 
-	public void update() {
-		if (counter > 0) {
-			counter--;
-		} else {
-			stateChangingDelay = random(150, 300);
-			counter = stateChangingDelay;
-			isLooking = !isLooking;
-			if(isLooking){
-				switching++;
-			}
-		}
-	}
 
 	@Override
 	public int getZ() {
