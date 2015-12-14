@@ -12,10 +12,14 @@ public class Main {
 
 	public static boolean isClicked = false;
 	public static int selectedMode = 3;
+	static GameLogic logic;
+	static GameScreen screen;
+
 
 	public static void main(String[] args) {
 
 		JFrame frame = new JFrame("Eat it up");
+		
 		while (true) {
 			GameTitle title = new GameTitle();
 			title.titleSong.play();
@@ -29,10 +33,9 @@ public class Main {
 			selectBC.setPreferredSize(new Dimension(180, 40));
 			JButton howToPlay = new JButton("HOW TO PLAY");
 			howToPlay.setPreferredSize(new Dimension(180, 40));
-			GameLogic logic = new GameLogic();
-			GameScreen screen = new GameScreen(logic);
-
 			titlePanel.setLayout(new BorderLayout());
+			logic = new GameLogic();
+			screen = new GameScreen(logic);
 
 			JPanel north = new JPanel();
 			north.setLayout(new FlowLayout(0, 0, 0));
@@ -47,6 +50,7 @@ public class Main {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					screen.backGroundMusic.play();
 					logic.getLookableTeacher().start();
 					logic.getTimeCount().start();
 					isClicked = true;
@@ -63,6 +67,7 @@ public class Main {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					screen.backGroundMusic.play();
 					logic.getLookableTeacher().start();
 					logic.getTimeCount().start();
 					isClicked = true;
@@ -79,6 +84,7 @@ public class Main {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					screen.backGroundMusic.play();
 					logic.getLookableTeacher().start();
 					logic.getTimeCount().start();
 					isClicked = true;
@@ -116,6 +122,8 @@ public class Main {
 				frame.repaint();
 
 			}
+			GameScreen.backGroundMusic.stop();
+			
 			GameEnding ending = new GameEnding(logic);
 			frame.remove(screen);
 			frame.add(ending);

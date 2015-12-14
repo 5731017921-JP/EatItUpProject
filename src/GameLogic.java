@@ -1,3 +1,5 @@
+import java.applet.Applet;
+import java.applet.AudioClip;
 
 public class GameLogic {
 	private Student student1;
@@ -7,6 +9,9 @@ public class GameLogic {
 	private Noodles noodles2;
 	private Thread timeCount;
 	private Thread lookableTeacher;
+	private boolean gameOver;
+	private AudioClip eatingSound;
+
 	public Thread getTimeCount() {
 		return timeCount;
 	}
@@ -22,9 +27,6 @@ public class GameLogic {
 	public void setLookableTeacher(Thread lookableTeacher) {
 		this.lookableTeacher = lookableTeacher;
 	}
-
-	private boolean gameOver;
-
 
 	public boolean isGameOver() {
 		return gameOver;
@@ -65,10 +67,17 @@ public class GameLogic {
 		noodles1 = new Noodles(student1);
 		noodles2 = new Noodles(student2);
 		gameOver = false;
+		ClassLoader loader = Main.class.getClassLoader();
+		try {
+			eatingSound = Applet.newAudioClip((loader.getResource("eatingSound.wav")).toURI().toURL());
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+
 		lookableTeacher = new Thread(new Runnable() {
 
 			@Override
-			public synchronized void run() {
+			public void run() {
 				while (true) {
 					try {
 						Thread.sleep(30);
@@ -79,13 +88,16 @@ public class GameLogic {
 					if (getTeacher().counter > 0) {
 						getTeacher().counter--;
 					} else {
-						getTeacher();
 						getTeacher().stateChangingDelay = Teacher.random(150, 300);
 						getTeacher().counter = getTeacher().stateChangingDelay;
 						getTeacher().setLooking(!getTeacher().isLooking);
 						if (getTeacher().isLooking) {
 							getTeacher().switching++;
 						}
+					}
+					if(gameOver){
+						getTeacher().setLooking(false);
+						break;
 					}
 
 				}
@@ -109,6 +121,11 @@ public class GameLogic {
 						setGameOver(true);
 						getStudent1().setRemainingTime(0);
 					}
+					if(gameOver){
+						getStudent1().setEating(false);
+						getStudent2().setEating(false);
+						break;
+					}
 				}
 			}
 		});
@@ -116,8 +133,10 @@ public class GameLogic {
 	}
 
 	public void hitButton(Student a, Teacher b) {
+		
 		if (!isGameOver() && !a.isDecreaseScore()) {
 			a.setEating(true);
+			eatingSound.play();
 			if (!b.isLooking()) {
 				a.plusScore();
 			}
@@ -132,6 +151,9 @@ public class GameLogic {
 
 		if (b.isLooking() && a.isEating() && !a.isDecreaseScore()) {
 			a.setLife(a.getLife() - 1);
+			if(a.getLife()<= 0){
+				gameOver = true;
+			}
 			a.setEating(false);
 			a.setDecreaseScore(true);
 		} else if (!b.isLooking()) {
@@ -145,6 +167,9 @@ public class GameLogic {
 		
 		if (b.isLooking() && a.isEating() && !a.isDecreaseScore()) {
 			a.setLife(a.getLife() - 1);
+			if(a.getLife()<= 0){
+				gameOver = true;
+			}
 			a.setEating(false);
 			a.setDecreaseScore(true);
 		} else if (!b.isLooking()) {
@@ -152,6 +177,9 @@ public class GameLogic {
 		}
 		if (b.isLooking() && c.isEating() && !c.isDecreaseScore()) {
 			c.setLife(c.getLife() - 1);
+			if(c.getLife()<= 0){
+				gameOver = true;
+			}
 			c.setEating(false);
 			c.setDecreaseScore(true);
 		} else if (!b.isLooking()) {

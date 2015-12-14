@@ -1,3 +1,4 @@
+import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -8,9 +9,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+
+import com.sun.media.jfxmedia.AudioClip;
 
 public class GameScreen extends JPanel {
 
@@ -18,6 +22,8 @@ public class GameScreen extends JPanel {
 	private final Font font = new Font("Jokerman", Font.BOLD, 30);
 	// private final Font smallfont = new Font("Tahoma", Font.PLAIN, 20);
 	private BufferedImage classroomBG, table, staticBook;
+	public static java.applet.AudioClip backGroundMusic;
+
 	
 	public GameScreen(GameLogic logic) {
 		super();
@@ -27,12 +33,20 @@ public class GameScreen extends JPanel {
 		setVisible(true);
 		setFocusable(true);
 		requestFocus();
+		RenderableHolder.getInstance().getRenderableList().clear();
+		
 		
 		ClassLoader loader = Main.class.getClassLoader();
 		try {
 			classroomBG = ImageIO.read(loader.getResource("Classroom.png"));
 			table = ImageIO.read(loader.getResource("Table.png"));
 			staticBook = ImageIO.read(loader.getResource("ontable-3.png"));
+			try {
+				backGroundMusic = Applet.newAudioClip((loader.getResource("background.wav")).toURI().toURL());
+			} catch (URISyntaxException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}

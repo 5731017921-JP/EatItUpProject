@@ -76,7 +76,7 @@ public class Student implements IRenderable {
 		this.id = id;
 		score = 0;
 		pause = false;
-		remainingTime = 20;
+		remainingTime = 180;
 		this.life = 5;
 		this.decreaseScore = false;
 		ClassLoader loader = Main.class.getClassLoader();
