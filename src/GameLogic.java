@@ -9,7 +9,19 @@ public class GameLogic {
 	private Noodles noodles2;
 	private Thread timeCount;
 	private Thread lookableTeacher;
+	private Thread bonusTimeAble;
+	private Thread popUpAble;
+
+	public Thread getBonusTimeAble() {
+		return bonusTimeAble;
+	}
+
+	public void setBonusTimeAble(Thread bonusTimeAble) {
+		this.bonusTimeAble = bonusTimeAble;
+	}
+
 	private boolean gameOver;
+	private boolean bonusTime;
 	private AudioClip eatingSound;
 
 	public Thread getTimeCount() {
@@ -67,6 +79,7 @@ public class GameLogic {
 		noodles1 = new Noodles(student1);
 		noodles2 = new Noodles(student2);
 		gameOver = false;
+		bonusTime = false;
 		ClassLoader loader = Main.class.getClassLoader();
 		try {
 			eatingSound = Applet.newAudioClip((loader.getResource("eatingSound.wav")).toURI().toURL());
@@ -95,7 +108,7 @@ public class GameLogic {
 							getTeacher().switching++;
 						}
 					}
-					if(gameOver){
+					if (gameOver) {
 						getTeacher().setLooking(false);
 						break;
 					}
@@ -103,12 +116,11 @@ public class GameLogic {
 				}
 			}
 		});
-		
 
 		timeCount = new Thread(new Runnable() {
 
 			@Override
-			public synchronized void run() {
+			public void run() {
 				while (true) {
 					try {
 						Thread.sleep(1000);
@@ -116,12 +128,12 @@ public class GameLogic {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					getStudent1().setRemainingTime(getStudent1().getRemainingTime() - 1);
-					if (getStudent1().getRemainingTime() <= 0) {
+					teacher.setRemainingTime(teacher.getRemainingTime() - 1);
+					if (teacher.getRemainingTime() <= 0) {
 						setGameOver(true);
-						getStudent1().setRemainingTime(0);
+						teacher.setRemainingTime(0);
 					}
-					if(gameOver){
+					if (gameOver) {
 						getStudent1().setEating(false);
 						getStudent2().setEating(false);
 						break;
@@ -129,16 +141,73 @@ public class GameLogic {
 				}
 			}
 		});
-		
+
+		bonusTimeAble = new Thread(new Runnable() {
+			boolean activate = false;
+
+			@Override
+			public void run() {
+
+				while (true) {
+					int randomTime = Teacher.random(10000, 30000);
+					if (!activate) {
+						try {
+							Thread.sleep(randomTime);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} else if (activate) {
+						try {
+							Thread.sleep(10000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					bonusTime = !bonusTime;
+					activate = !activate;
+					if(activate){
+						GameScreen.popup = new PopUp();
+						Thread popUpThread = new Thread(new Runnable() {
+							
+							@Override
+							public void run() {
+								// TODO Auto-generated method stub
+								
+								for(int i = 0;i< 30000000;i++){
+									synchronized (GameScreen.popup) {
+										GameScreen.popup.setShow(true);
+										GameScreen.popup.notifyAll();
+									}
+								}
+								GameScreen.popup = null;
+							}
+						});
+						popUpThread.start();
+					}
+					System.out.println(bonusTime);
+					if (gameOver) {
+						bonusTime = false;
+						break;
+					}
+				}
+			}
+
+		});
+
 	}
 
 	public void hitButton(Student a, Teacher b) {
-		
+
 		if (!isGameOver() && !a.isDecreaseScore()) {
 			a.setEating(true);
 			eatingSound.play();
-			if (!b.isLooking()) {
-				a.plusScore();
+			if (!b.isLooking() && !bonusTime) {
+				a.plusScore(1);
+			}
+			if (!b.isLooking() && bonusTime) {
+				a.plusScore(2);
 			}
 
 		} else {
@@ -147,11 +216,10 @@ public class GameLogic {
 	}
 
 	public void update(Student a, Teacher b) {
-		
 
 		if (b.isLooking() && a.isEating() && !a.isDecreaseScore()) {
 			a.setLife(a.getLife() - 1);
-			if(a.getLife()<= 0){
+			if (a.getLife() <= 0) {
 				gameOver = true;
 			}
 			a.setEating(false);
@@ -163,11 +231,10 @@ public class GameLogic {
 	}
 
 	public void update(Student a, Student c, Teacher b) {
-	
-		
+
 		if (b.isLooking() && a.isEating() && !a.isDecreaseScore()) {
 			a.setLife(a.getLife() - 1);
-			if(a.getLife()<= 0){
+			if (a.getLife() <= 0) {
 				gameOver = true;
 			}
 			a.setEating(false);
@@ -177,7 +244,7 @@ public class GameLogic {
 		}
 		if (b.isLooking() && c.isEating() && !c.isDecreaseScore()) {
 			c.setLife(c.getLife() - 1);
-			if(c.getLife()<= 0){
+			if (c.getLife() <= 0) {
 				gameOver = true;
 			}
 			c.setEating(false);
@@ -202,19 +269,17 @@ public class GameLogic {
 	public void setNoodles2(Noodles noodles2) {
 		this.noodles2 = noodles2;
 	}
-	
-	public String winnerName(){
-		if(Main.selectedMode == 3) {
-			if(getStudent1().getScore() > getStudent2().getScore()){
+
+	public String winnerName() {
+		if (Main.selectedMode == 3) {
+			if (getStudent1().getScore() > getStudent2().getScore()) {
 				return "blossom";
-			}
-			else if (getStudent1().getScore() < getStudent2().getScore()){
+			} else if (getStudent1().getScore() < getStudent2().getScore()) {
 				return "buttercup";
 			} else {
 				return "equal";
 			}
-		}
-		else
+		} else
 			return "no";
 	}
 }

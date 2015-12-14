@@ -7,7 +7,6 @@ public class Student implements IRenderable {
 	private boolean decreaseScore;
 	private int score;
 	private boolean pause;
-	private static int remainingTime;
 	private boolean eating;
 	private int life;
 	private int id;
@@ -36,14 +35,6 @@ public class Student implements IRenderable {
 
 	public void setCurrentImage(BufferedImage currentImage) {
 		this.currentImage = currentImage;
-	}
-
-	public int getRemainingTime() {
-		return remainingTime;
-	}
-
-	public void setRemainingTime(int remainingTime) {
-		Student.remainingTime = remainingTime;
 	}
 
 	public boolean isEating() {
@@ -76,7 +67,6 @@ public class Student implements IRenderable {
 		this.id = id;
 		score = 0;
 		pause = false;
-		remainingTime = 180;
 		this.life = 5;
 		this.decreaseScore = false;
 		ClassLoader loader = Main.class.getClassLoader();
@@ -101,8 +91,8 @@ public class Student implements IRenderable {
 		}
 	}
 
-	public void plusScore() {
-		score++;
+	public void plusScore(int score) {
+		this.score = this.score + score;
 	}
 		
 

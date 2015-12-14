@@ -10,10 +10,21 @@ public class Teacher implements IRenderable {
 	int counter,switching;
 	int stateChangingDelay;
 	BufferedImage lookingTeacher1, lookingTeacher2, notLookingTeacher;
+	private static int remainingTime;
+
+	public static int getRemainingTime() {
+		return remainingTime;
+	}
+
+	public static void setRemainingTime(int remainingTime) {
+		Teacher.remainingTime = remainingTime;
+	}
+
 
 	public Teacher() {
 		switching = 0;
 		counter = 200;
+		remainingTime = 180;
 		stateChangingDelay = random(150, 300);
 		isLooking = false;
 		ClassLoader loader = Main.class.getClassLoader();

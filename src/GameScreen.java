@@ -23,8 +23,8 @@ public class GameScreen extends JPanel {
 	// private final Font smallfont = new Font("Tahoma", Font.PLAIN, 20);
 	private BufferedImage classroomBG, table, staticBook;
 	public static java.applet.AudioClip backGroundMusic;
+	public static PopUp popup;
 
-	
 	public GameScreen(GameLogic logic) {
 		super();
 		setDoubleBuffered(true);
@@ -34,8 +34,7 @@ public class GameScreen extends JPanel {
 		setFocusable(true);
 		requestFocus();
 		RenderableHolder.getInstance().getRenderableList().clear();
-		
-		
+
 		ClassLoader loader = Main.class.getClassLoader();
 		try {
 			classroomBG = ImageIO.read(loader.getResource("Classroom.png"));
@@ -128,7 +127,7 @@ public class GameScreen extends JPanel {
 			logic.update(logic.getStudent1(), logic.getStudent2(), logic.getTeacher());
 
 		}
-		
+
 	}
 
 	public void paintComponent(Graphics g) {
@@ -141,17 +140,18 @@ public class GameScreen extends JPanel {
 			g2d.drawString("Blossom : " + logic.getStudent1().getScore(), 220, 90);
 			g2d.setColor(Color.darkGray);
 			g2d.drawString("life:" + logic.getStudent1().getLife(), 5, 475);
-			g2d.drawString("time:" + logic.getStudent1().getRemainingTime(), 300, 40);
+			g2d.drawString("time:" + logic.getTeacher().getRemainingTime(), 300, 40);
 		}
 		if (Main.selectedMode == 3 || Main.selectedMode == 2) {
 			g2d.drawString("Buttercup : " + logic.getStudent2().getScore(), 220, 150);
 			g2d.setColor(Color.darkGray);
 
 			g2d.drawString("life:" + logic.getStudent2().getLife(), 625, 475);
-			g2d.drawString("time:" + logic.getStudent2().getRemainingTime(), 300, 40);
+			g2d.drawString("time:" + logic.getTeacher().getRemainingTime(), 300, 40);
 
 		}
-
+		
+		
 		for (IRenderable x : RenderableHolder.getInstance().getRenderableList()) {
 			if (x.getZ() < 3) {
 				x.render(g2d);
@@ -168,6 +168,20 @@ public class GameScreen extends JPanel {
 			}
 
 		}
+		try{
+			synchronized(popup){
+				try {
+					popup.wait();
+					if(popup.isShow()){
+						popup.drawPopUp(g2d);
+						popup.setShow(false);
+					}
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		} catch(NullPointerException e){}
 
 	}
 }

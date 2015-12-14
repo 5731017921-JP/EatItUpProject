@@ -53,6 +53,7 @@ public class Main {
 					screen.backGroundMusic.play();
 					logic.getLookableTeacher().start();
 					logic.getTimeCount().start();
+					logic.getBonusTimeAble().start();
 					isClicked = true;
 					title.titleSong.stop();
 					frame.remove(titlePanel);
@@ -70,6 +71,7 @@ public class Main {
 					screen.backGroundMusic.play();
 					logic.getLookableTeacher().start();
 					logic.getTimeCount().start();
+					logic.getBonusTimeAble().start();
 					isClicked = true;
 					title.titleSong.stop();
 					frame.remove(titlePanel);
@@ -87,6 +89,7 @@ public class Main {
 					screen.backGroundMusic.play();
 					logic.getLookableTeacher().start();
 					logic.getTimeCount().start();
+					logic.getBonusTimeAble().start();
 					isClicked = true;
 					title.titleSong.stop();
 					frame.remove(titlePanel);
