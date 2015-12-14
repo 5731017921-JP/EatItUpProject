@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 public class Student implements IRenderable {
-	private boolean lifeDecreased, pause, eating;
+	private boolean lifeDecreased, eating;
 	private int life, id, score;
 	private BufferedImage ready, currentImage, eat1, eat2, eat3, eat4;;
 
@@ -49,18 +49,10 @@ public class Student implements IRenderable {
 		this.score = score;
 	}
 
-	public boolean isPause() {
-		return pause;
-	}
-
-	public void setPause(boolean pause) {
-		this.pause = pause;
-	}
 
 	public Student(int id) {
 		this.id = id;
 		score = 0;
-		pause = false;
 		this.life = 5;
 		this.lifeDecreased = false;
 		ClassLoader loader = Main.class.getClassLoader();
