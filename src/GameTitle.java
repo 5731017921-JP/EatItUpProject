@@ -1,3 +1,4 @@
+
 import java.applet.Applet;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -24,15 +25,15 @@ public class GameTitle extends JPanel {
 		requestFocus();
 		ClassLoader loader = Main.class.getClassLoader();
 		try {
-			bg1 = ImageIO.read(loader.getResource("bg1.jpg"));
-			bg2 = ImageIO.read(loader.getResource("bg2.jpg"));
-			bg3 = ImageIO.read(loader.getResource("bg3.jpg"));
-			bg4 = ImageIO.read(loader.getResource("bg4.jpg"));
-			bg5 = ImageIO.read(loader.getResource("bg5.png"));
-			bg6 = ImageIO.read(loader.getResource("bg6.jpg"));
-			bg7 = ImageIO.read(loader.getResource("bg7.jpg"));
-			howToPlay = ImageIO.read(loader.getResource("HowToPlay.jpg"));
-			titleSong = Applet.newAudioClip((loader.getResource("titlesong.wav")).toURI().toURL());
+			bg1 = ImageIO.read(loader.getResource("res/bg1.jpg"));
+			bg2 = ImageIO.read(loader.getResource("res/bg2.jpg"));
+			bg3 = ImageIO.read(loader.getResource("res/bg3.jpg"));
+			bg4 = ImageIO.read(loader.getResource("res/bg4.jpg"));
+			bg5 = ImageIO.read(loader.getResource("res/bg5.png"));
+			bg6 = ImageIO.read(loader.getResource("res/bg6.jpg"));
+			bg7 = ImageIO.read(loader.getResource("res/bg7.jpg"));
+			howToPlay = ImageIO.read(loader.getResource("res/HowToPlay.jpg"));
+			titleSong = Applet.newAudioClip((loader.getResource("res/titlesong.wav")).toURI().toURL());
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}

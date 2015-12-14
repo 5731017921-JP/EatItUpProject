@@ -1,3 +1,4 @@
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -14,7 +15,7 @@ public class PopUp {
 	public PopUp(){
 		ClassLoader loader = Main.class.getClassLoader();
 		try {
-			popUpImage = ImageIO.read(loader.getResource("BonusTime.jpg"));
+			popUpImage = ImageIO.read(loader.getResource("res/BonusTime.jpg"));
 		}
 		catch (IOException e){
 			popUpImage = null;

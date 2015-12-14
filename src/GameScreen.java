@@ -1,3 +1,4 @@
+
 import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -21,7 +22,7 @@ public class GameScreen extends JPanel {
 	private GameLogic logic;
 	private final Font font = new Font("Jokerman", Font.BOLD, 30);
 	// private final Font smallfont = new Font("Tahoma", Font.PLAIN, 20);
-	private BufferedImage classroomBG, table, staticBook;
+	private BufferedImage classroomBG, table, staticBook,bonusTimeIcon;
 	public static java.applet.AudioClip backGroundMusic;
 	public static PopUp popup;
 
@@ -37,11 +38,12 @@ public class GameScreen extends JPanel {
 
 		ClassLoader loader = Main.class.getClassLoader();
 		try {
-			classroomBG = ImageIO.read(loader.getResource("Classroom.png"));
-			table = ImageIO.read(loader.getResource("Table.png"));
-			staticBook = ImageIO.read(loader.getResource("ontable-3.png"));
+			classroomBG = ImageIO.read(loader.getResource("res/Classroom.png"));
+			table = ImageIO.read(loader.getResource("res/Table.png"));
+			staticBook = ImageIO.read(loader.getResource("res/ontable-3.png"));
+			bonusTimeIcon = ImageIO.read(loader.getResource("res/BonusTime.png"));
 			try {
-				backGroundMusic = Applet.newAudioClip((loader.getResource("background.wav")).toURI().toURL());
+				backGroundMusic = Applet.newAudioClip((loader.getResource("res/background.wav")).toURI().toURL());
 			} catch (URISyntaxException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -149,6 +151,9 @@ public class GameScreen extends JPanel {
 			g2d.drawString("life:" + logic.getStudent2().getLife(), 625, 475);
 			g2d.drawString("time:" + logic.getTeacher().getRemainingTime(), 300, 40);
 
+		}
+		if(Main.logic.isBonusTime()){
+			g2d.drawImage(bonusTimeIcon,null,0,0);
 		}
 		
 		

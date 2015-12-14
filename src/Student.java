@@ -1,3 +1,4 @@
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
@@ -72,18 +73,18 @@ public class Student implements IRenderable {
 		ClassLoader loader = Main.class.getClassLoader();
 		try {
 			if (id == 1) {
-				ready = ImageIO.read(loader.getResource("Blossom-static.png"));
-				eat1 = ImageIO.read(loader.getResource("Blossom-eat1.png"));
-				eat2 = ImageIO.read(loader.getResource("Blossom-eat2.png"));
-				eat3 = ImageIO.read(loader.getResource("Blossom-eat3.png"));
-				eat4 = ImageIO.read(loader.getResource("Blossom-eat4.png"));
+				ready = ImageIO.read(loader.getResource("res/Blossom-static.png"));
+				eat1 = ImageIO.read(loader.getResource("res/Blossom-eat1.png"));
+				eat2 = ImageIO.read(loader.getResource("res/Blossom-eat2.png"));
+				eat3 = ImageIO.read(loader.getResource("res/Blossom-eat3.png"));
+				eat4 = ImageIO.read(loader.getResource("res/Blossom-eat4.png"));
 				currentImage = eat1;
 			} else {
-				ready = ImageIO.read(loader.getResource("Buttercup-static.png"));
-				eat1 = ImageIO.read(loader.getResource("Buttercup-eat1.png"));
-				eat2 = ImageIO.read(loader.getResource("Buttercup-eat2.png"));
-				eat3 = ImageIO.read(loader.getResource("Buttercup-eat3.png"));
-				eat4 = ImageIO.read(loader.getResource("Buttercup-eat4.png"));
+				ready = ImageIO.read(loader.getResource("res/Buttercup-static.png"));
+				eat1 = ImageIO.read(loader.getResource("res/Buttercup-eat1.png"));
+				eat2 = ImageIO.read(loader.getResource("res/Buttercup-eat2.png"));
+				eat3 = ImageIO.read(loader.getResource("res/Buttercup-eat3.png"));
+				eat4 = ImageIO.read(loader.getResource("res/Buttercup-eat4.png"));
 				currentImage = eat1;
 			}
 		} catch (Exception e) {

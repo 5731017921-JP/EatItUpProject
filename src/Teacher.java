@@ -1,3 +1,4 @@
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
@@ -29,9 +30,9 @@ public class Teacher implements IRenderable {
 		isLooking = false;
 		ClassLoader loader = Main.class.getClassLoader();
 		try {
-			lookingTeacher1 = ImageIO.read(loader.getResource("lookingTeacher1.png"));
-			lookingTeacher2 = ImageIO.read(loader.getResource("lookingTeacher2.png"));
-			notLookingTeacher = ImageIO.read(loader.getResource("notLookingTeacher.png"));
+			lookingTeacher1 = ImageIO.read(loader.getResource("res/lookingTeacher1.png"));
+			lookingTeacher2 = ImageIO.read(loader.getResource("res/lookingTeacher2.png"));
+			notLookingTeacher = ImageIO.read(loader.getResource("res/notLookingTeacher.png"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

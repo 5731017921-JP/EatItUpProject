@@ -1,3 +1,4 @@
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
@@ -12,19 +13,19 @@ public class Noodles implements IRenderable{
 		
 		try {
 			if(student.getId()==1){
-			ready = ImageIO.read(loader.getResource("ontable-1.png"));
-			noodles1 = ImageIO.read(loader.getResource("noodles_1.png"));
-			noodles2 = ImageIO.read(loader.getResource("noodles_2.png"));
-			noodles3 = ImageIO.read(loader.getResource("noodles_3.png"));
-			noodles4 = ImageIO.read(loader.getResource("noodles_4.png"));
+			ready = ImageIO.read(loader.getResource("res/ontable-1.png"));
+			noodles1 = ImageIO.read(loader.getResource("res/noodles_1.png"));
+			noodles2 = ImageIO.read(loader.getResource("res/noodles_2.png"));
+			noodles3 = ImageIO.read(loader.getResource("res/noodles_3.png"));
+			noodles4 = ImageIO.read(loader.getResource("res/noodles_4.png"));
 			currentImage = noodles1;
 			}
 			else{
-				ready = ImageIO.read(loader.getResource("ontable-2.png"));
-				noodles1 = ImageIO.read(loader.getResource("noodles-1.png"));
-				noodles2 = ImageIO.read(loader.getResource("noodles-2.png"));
-				noodles3 = ImageIO.read(loader.getResource("noodles-3.png"));
-				noodles4 = ImageIO.read(loader.getResource("noodles-4.png"));
+				ready = ImageIO.read(loader.getResource("res/ontable-2.png"));
+				noodles1 = ImageIO.read(loader.getResource("res/noodles-1.png"));
+				noodles2 = ImageIO.read(loader.getResource("res/noodles-2.png"));
+				noodles3 = ImageIO.read(loader.getResource("res/noodles-3.png"));
+				noodles4 = ImageIO.read(loader.getResource("res/noodles-4.png"));
 				currentImage = noodles1;	
 			}
 		} catch (Exception e) {

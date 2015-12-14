@@ -1,4 +1,5 @@
 
+
 public class InputUtility {
 	private static boolean aTriggered,dTriggered,jTriggered,lTriggered;
 	

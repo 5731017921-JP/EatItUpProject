@@ -1,3 +1,4 @@
+
 import java.applet.Applet;
 import java.applet.AudioClip;
 
@@ -11,6 +12,9 @@ public class GameLogic {
 	private Thread lookableTeacher;
 	private Thread bonusTimeAble;
 	private Thread popUpAble;
+	private boolean gameOver;
+	private boolean bonusTime;
+	private boolean timeOut;
 
 	public Thread getBonusTimeAble() {
 		return bonusTimeAble;
@@ -19,9 +23,14 @@ public class GameLogic {
 	public void setBonusTimeAble(Thread bonusTimeAble) {
 		this.bonusTimeAble = bonusTimeAble;
 	}
+	public boolean isBonusTime() {
+		return bonusTime;
+	}
 
-	private boolean gameOver;
-	private boolean bonusTime;
+	public void setBonusTime(boolean bonusTime) {
+		this.bonusTime = bonusTime;
+	}
+
 	private AudioClip eatingSound;
 
 	public Thread getTimeCount() {
@@ -82,7 +91,7 @@ public class GameLogic {
 		bonusTime = false;
 		ClassLoader loader = Main.class.getClassLoader();
 		try {
-			eatingSound = Applet.newAudioClip((loader.getResource("eatingSound.wav")).toURI().toURL());
+			eatingSound = Applet.newAudioClip((loader.getResource("res/eatingSound.wav")).toURI().toURL());
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -108,7 +117,7 @@ public class GameLogic {
 							getTeacher().switching++;
 						}
 					}
-					if (gameOver) {
+					if (gameOver || timeOut) {
 						getTeacher().setLooking(false);
 						break;
 					}
@@ -130,10 +139,10 @@ public class GameLogic {
 					}
 					teacher.setRemainingTime(teacher.getRemainingTime() - 1);
 					if (teacher.getRemainingTime() <= 0) {
-						setGameOver(true);
+						timeOut = true;
 						teacher.setRemainingTime(0);
 					}
-					if (gameOver) {
+					if (gameOver || timeOut) {
 						getStudent1().setEating(false);
 						getStudent2().setEating(false);
 						break;
@@ -159,7 +168,7 @@ public class GameLogic {
 						}
 					} else if (activate) {
 						try {
-							Thread.sleep(10000);
+							Thread.sleep(15000);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -175,8 +184,10 @@ public class GameLogic {
 							public void run() {
 								// TODO Auto-generated method stub
 								
-								for(int i = 0;i< 30000000;i++){
+								for(int i = 0;i< 25000000;i++){
 									synchronized (GameScreen.popup) {
+										student1.setEating(false);
+										student2.setEating(false);
 										GameScreen.popup.setShow(true);
 										GameScreen.popup.notifyAll();
 									}
