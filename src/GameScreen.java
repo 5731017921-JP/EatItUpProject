@@ -103,10 +103,12 @@ public class GameScreen extends JPanel {
 		if (selectedMode == 1) {
 			logic.update(logic.getStudent1(), logic.getTeacher());
 			logic.getStudent2().setEating(false);
+			logic.getStudent2().setDecreaseScore(true);
 
 		} else if (selectedMode == 2) {
 			logic.update(logic.getStudent2(), logic.getTeacher());
 			logic.getStudent1().setEating(false);
+			logic.getStudent1().setDecreaseScore(true);
 
 		} else {
 			logic.update(logic.getStudent1(), logic.getStudent2(), logic.getTeacher());
