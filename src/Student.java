@@ -5,21 +5,16 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 public class Student implements IRenderable {
-	private boolean decreaseScore;
-	private int score;
-	private boolean pause;
-	private boolean eating;
-	private int life;
-	private int id;
-	private BufferedImage ready, currentImage;
-	private BufferedImage eat1, eat2, eat3, eat4;
+	private boolean lifeDecreased, pause, eating;
+	private int life, id, score;
+	private BufferedImage ready, currentImage, eat1, eat2, eat3, eat4;;
 
-	public boolean isDecreaseScore() {
-		return decreaseScore;
+	public boolean isLifeDecreased() {
+		return lifeDecreased;
 	}
 
-	public void setDecreaseScore(boolean decreaseScore) {
-		this.decreaseScore = decreaseScore;
+	public void setLifeDecreased(boolean lifeDecreased) {
+		this.lifeDecreased = lifeDecreased;
 	}
 
 	public int getLife() {
@@ -62,14 +57,12 @@ public class Student implements IRenderable {
 		this.pause = pause;
 	}
 
-	
-
 	public Student(int id) {
 		this.id = id;
 		score = 0;
 		pause = false;
 		this.life = 5;
-		this.decreaseScore = false;
+		this.lifeDecreased = false;
 		ClassLoader loader = Main.class.getClassLoader();
 		try {
 			if (id == 1) {
@@ -95,7 +88,6 @@ public class Student implements IRenderable {
 	public void plusScore(int score) {
 		this.score = this.score + score;
 	}
-		
 
 	@Override
 	public int getZ() {
@@ -114,7 +106,7 @@ public class Student implements IRenderable {
 		} else if (getCurrentImage() == eat4) {
 			this.setCurrentImage(eat1);
 		}
-		
+
 		if (isEating()) {
 			g2.drawImage(getCurrentImage(), null, 0, 0);
 

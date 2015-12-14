@@ -1,20 +1,11 @@
-
-import java.applet.Applet;
-import java.applet.AudioClip;
+import resource.Resource;
 
 public class GameLogic {
-	private Student student1;
-	private Student student2;
+	private Student student1,student2;
 	private Teacher teacher;
-	private Noodles noodles1;
-	private Noodles noodles2;
-	private Thread timeCount;
-	private Thread lookableTeacher;
-	private Thread bonusTimeAble;
-	private Thread popUpAble;
-	private boolean gameOver;
-	private boolean bonusTime;
-	private boolean timeOut;
+	private Noodles noodles1,noodles2;
+	private Thread timeCount,lookableTeacher,bonusTimeAble;
+	private boolean gameOver,bonusTime,timeOut;
 
 	public Thread getBonusTimeAble() {
 		return bonusTimeAble;
@@ -31,7 +22,6 @@ public class GameLogic {
 		this.bonusTime = bonusTime;
 	}
 
-	private AudioClip eatingSound;
 
 	public Thread getTimeCount() {
 		return timeCount;
@@ -89,13 +79,6 @@ public class GameLogic {
 		noodles2 = new Noodles(student2);
 		gameOver = false;
 		bonusTime = false;
-		ClassLoader loader = Main.class.getClassLoader();
-		try {
-			eatingSound = Applet.newAudioClip((loader.getResource("res/eatingSound.wav")).toURI().toURL());
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-
 		lookableTeacher = new Thread(new Runnable() {
 
 			@Override
@@ -107,14 +90,14 @@ public class GameLogic {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					if (getTeacher().counter > 0) {
-						getTeacher().counter--;
+					if (getTeacher().getCounter() > 0) {
+						getTeacher().setCounter(getTeacher().getCounter()-1);
 					} else {
-						getTeacher().stateChangingDelay = Teacher.random(150, 300);
-						getTeacher().counter = getTeacher().stateChangingDelay;
+						getTeacher().setStateChangingDelay(Teacher.random(150, 300));
+						getTeacher().setCounter(getTeacher().getStateChangingDelay());
 						getTeacher().setLooking(!getTeacher().isLooking);
 						if (getTeacher().isLooking) {
-							getTeacher().switching++;
+							getTeacher().setSwitching(getTeacher().getSwitching()+1);
 						}
 					}
 					if (gameOver || timeOut) {
@@ -137,10 +120,10 @@ public class GameLogic {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					teacher.setRemainingTime(teacher.getRemainingTime() - 1);
-					if (teacher.getRemainingTime() <= 0) {
+					Teacher.setRemainingTime(Teacher.getRemainingTime() - 1);
+					if (Teacher.getRemainingTime() <= 0) {
 						timeOut = true;
-						teacher.setRemainingTime(0);
+						Teacher.setRemainingTime(0);
 					}
 					if (gameOver || timeOut) {
 						getStudent1().setEating(false);
@@ -209,16 +192,16 @@ public class GameLogic {
 
 	}
 
-	public void hitButton(Student a, Teacher b) {
+	public void hitButton(Student student, Teacher teacher) {
 
-		if (!isGameOver() && !a.isDecreaseScore()) {
-			a.setEating(true);
-			eatingSound.play();
-			if (!b.isLooking() && !bonusTime) {
-				a.plusScore(1);
+		if (!isGameOver() && !student.isLifeDecreased()) {
+			student.setEating(true);
+			Resource.eatingSound.play();
+			if (!teacher.isLooking() && !bonusTime) {
+				student.plusScore(1);
 			}
-			if (!b.isLooking() && bonusTime) {
-				a.plusScore(2);
+			if (!teacher.isLooking() && bonusTime) {
+				student.plusScore(2);
 			}
 
 		} else {
@@ -226,42 +209,42 @@ public class GameLogic {
 		}
 	}
 
-	public void update(Student a, Teacher b) {
+	public void update(Student student, Teacher teacher) {
 
-		if (b.isLooking() && a.isEating() && !a.isDecreaseScore()) {
-			a.setLife(a.getLife() - 1);
-			if (a.getLife() <= 0) {
+		if (teacher.isLooking() && student.isEating() && !student.isLifeDecreased()) {
+			student.setLife(student.getLife() - 1);
+			if (student.getLife() <= 0) {
 				gameOver = true;
 			}
-			a.setEating(false);
-			a.setDecreaseScore(true);
-		} else if (!b.isLooking()) {
-			a.setDecreaseScore(false);
+			student.setEating(false);
+			student.setLifeDecreased(true);
+		} else if (!teacher.isLooking()) {
+			student.setLifeDecreased(false);
 		}
 
 	}
 
-	public void update(Student a, Student c, Teacher b) {
+	public void update(Student student1, Student student2, Teacher teacher) {
 
-		if (b.isLooking() && a.isEating() && !a.isDecreaseScore()) {
-			a.setLife(a.getLife() - 1);
-			if (a.getLife() <= 0) {
+		if (teacher.isLooking() && student1.isEating() && !student1.isLifeDecreased()) {
+			student1.setLife(student1.getLife() - 1);
+			if (student1.getLife() <= 0) {
 				gameOver = true;
 			}
-			a.setEating(false);
-			a.setDecreaseScore(true);
-		} else if (!b.isLooking()) {
-			a.setDecreaseScore(false);
+			student1.setEating(false);
+			student1.setLifeDecreased(true);
+		} else if (!teacher.isLooking()) {
+			student1.setLifeDecreased(false);
 		}
-		if (b.isLooking() && c.isEating() && !c.isDecreaseScore()) {
-			c.setLife(c.getLife() - 1);
-			if (c.getLife() <= 0) {
+		if (teacher.isLooking() && student2.isEating() && !student2.isLifeDecreased()) {
+			student2.setLife(student2.getLife() - 1);
+			if (student2.getLife() <= 0) {
 				gameOver = true;
 			}
-			c.setEating(false);
-			c.setDecreaseScore(true);
-		} else if (!b.isLooking()) {
-			c.setDecreaseScore(false);
+			student2.setEating(false);
+			student2.setLifeDecreased(true);
+		} else if (!teacher.isLooking()) {
+			student2.setLifeDecreased(false);
 		}
 	}
 

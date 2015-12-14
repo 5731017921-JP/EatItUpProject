@@ -1,12 +1,13 @@
 
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+
+import resource.Resource;
 
 public class Main {
 
@@ -16,12 +17,10 @@ public class Main {
 	static GameScreen screen;
 
 	public static void main(String[] args) {
-		try {
 			JFrame frame = new JFrame("Eat it up");
-			
 			while (true) {
 				GameTitle title = new GameTitle();
-				title.titleSong.play();
+				Resource.titleSong.play();
 				JPanel titlePanel = new JPanel();
 				titlePanel.setLayout(new BorderLayout());
 				JButton play = new JButton("2Players");
@@ -49,12 +48,12 @@ public class Main {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						screen.backGroundMusic.play();
+						Resource.backGroundMusic.play();
 						logic.getLookableTeacher().start();
 						logic.getTimeCount().start();
 						logic.getBonusTimeAble().start();
 						isClicked = true;
-						title.titleSong.stop();
+						Resource.titleSong.stop();
 						frame.remove(titlePanel);
 						frame.add(screen);
 						frame.validate();
@@ -67,12 +66,12 @@ public class Main {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						screen.backGroundMusic.play();
+						Resource.backGroundMusic.play();
 						logic.getLookableTeacher().start();
 						logic.getTimeCount().start();
 						logic.getBonusTimeAble().start();
 						isClicked = true;
-						title.titleSong.stop();
+						Resource.titleSong.stop();
 						frame.remove(titlePanel);
 						frame.add(screen);
 						frame.validate();
@@ -85,12 +84,12 @@ public class Main {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						screen.backGroundMusic.play();
+						Resource.backGroundMusic.play();
 						logic.getLookableTeacher().start();
 						logic.getTimeCount().start();
 						logic.getBonusTimeAble().start();
 						isClicked = true;
-						title.titleSong.stop();
+						Resource.titleSong.stop();
 						frame.remove(titlePanel);
 						frame.add(screen);
 						frame.validate();
@@ -124,14 +123,14 @@ public class Main {
 					frame.repaint();
 
 				}
-				GameScreen.backGroundMusic.stop();
+				Resource.backGroundMusic.stop();
 
 				GameEnding ending = new GameEnding(logic);
 				frame.remove(screen);
 				frame.add(ending);
 				frame.validate();
 				frame.setVisible(true);
-				ending.cryingSound.play();
+				Resource.cryingSound.play();
 
 				frame.repaint();
 				try {
@@ -148,8 +147,7 @@ public class Main {
 				frame.remove(ending);
 
 			}
-		} catch (Exception e) {
-
-		}
+			
 	}
+	
 }

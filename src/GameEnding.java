@@ -11,11 +11,15 @@ import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import resource.Resource;
+
 public class GameEnding extends JPanel {
-	private BufferedImage cryingScene, winnerDeclarationScence,gameOverScence;
 	private int paintCounter;
 	private GameLogic gameLogic;
-	public AudioClip cryingSound;
+	public static BufferedImage winnerDeclarationScence;
+	public GameLogic getGameLogic() {
+		return gameLogic;
+	}
 
 	public GameEnding(GameLogic gameLogic) {
 		super();
@@ -24,13 +28,11 @@ public class GameEnding extends JPanel {
 		requestFocus();
 		this.gameLogic = gameLogic;
 		ClassLoader loader = Main.class.getClassLoader();
-		try {
-			cryingScene = ImageIO.read(loader.getResource("Ending1.jpg"));
-			winnerDeclarationScence = ImageIO.read(loader.getResource("Ending_" + gameLogic.winnerName() + "win.jpg"));
-			gameOverScence =  ImageIO.read(loader.getResource("Ending_gameover.jpg"));
-			cryingSound = Applet.newAudioClip((loader.getResource("newcry.wav")).toURI().toURL());
-		} catch (Exception e) {
-			e.printStackTrace();
+		try{
+			winnerDeclarationScence = ImageIO.read(loader.getResource("Ending_" + gameLogic.winnerName() + "win.jpg"));	
+		}
+		catch (Exception e){
+			
 		}
 		paintCounter = 0;
 		
@@ -40,12 +42,12 @@ public class GameEnding extends JPanel {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		if (paintCounter <2) {
-			g2d.drawImage(cryingScene, null, 0, 0);
+			g2d.drawImage(Resource.cryingScene, null, 0, 0);
 			paintCounter++;
 		} else {
-			cryingSound.stop();
+			Resource.cryingSound.stop();
 			if(gameLogic.isGameOver())
-				g2d.drawImage(gameOverScence, null, 0, 0);
+				g2d.drawImage(Resource.gameOverScence, null, 0, 0);
 			else g2d.drawImage(winnerDeclarationScence, null, 0, 0);
 		}
 	}
