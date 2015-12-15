@@ -14,9 +14,9 @@ public class RenderableHolder {
 		return instance;
 	}
 
-	public RenderableHolder() {
-		super();
-	}
+//	public RenderableHolder() {
+//		super();
+//	}
 
 	public void add(IRenderable obj) {
 		objectOnScreen.add(obj);

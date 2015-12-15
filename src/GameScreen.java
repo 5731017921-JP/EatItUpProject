@@ -109,17 +109,19 @@ public class GameScreen extends JPanel {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.drawImage(Resource.classroomBG, null, 0, 0);
-		g2d.setColor(Color.white);
+		
 		g2d.setFont(font);
 		if (Main.selectedMode == 3 || Main.selectedMode == 1) {
-			g2d.drawString("Blossom : " + logic.getStudent1().getScore(), 220, 90);
+			g2d.setColor(Color.white);
+			g2d.drawString("Blossom : " + logic.getStudent1().getScore(), 200, 90);
 			g2d.setColor(Color.darkGray);
 			g2d.drawString("life:" + logic.getStudent1().getLife(), 5, 475);
 			logic.getTeacher();
 			g2d.drawString("time:" + Teacher.getRemainingTime(), 300, 40);
 		}
 		if (Main.selectedMode == 3 || Main.selectedMode == 2) {
-			g2d.drawString("Buttercup : " + logic.getStudent2().getScore(), 220, 150);
+			g2d.setColor(Color.white);
+			g2d.drawString("Buttercup : " + logic.getStudent2().getScore(), 200, 150);
 			g2d.setColor(Color.darkGray);
 
 			g2d.drawString("life:" + logic.getStudent2().getLife(), 625, 475);

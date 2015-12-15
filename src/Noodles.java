@@ -5,8 +5,8 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 public class Noodles implements IRenderable{ 
-	Student student;
-	BufferedImage currentImage,noodles1,noodles2,noodles3,noodles4,ready;
+	private Student student;
+	private BufferedImage currentImage,noodles1,noodles2,noodles3,noodles4,ready;
 	public Noodles(Student student){
 		this.student = student;
 		ClassLoader loader = Main.class.getClassLoader();

@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import resource.Resource;
 
 public class Teacher implements IRenderable {
-	private int x, y, counter, switching, stateChangingDelay;
+	private int counter, switching, stateChangingDelay;
 	boolean isLooking;
 	private static int remainingTime;
 
@@ -47,22 +47,6 @@ public class Teacher implements IRenderable {
 		stateChangingDelay = random(150, 300);
 		isLooking = false;
 
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
 	}
 
 	public boolean isLooking() {

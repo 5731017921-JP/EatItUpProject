@@ -23,8 +23,8 @@ public class Resource {
 	public static BufferedImage lookingTeacher2;
 	public static BufferedImage notLookingTeacher;
 	public static BufferedImage classroomBG, table, staticBook,bonusTimeIcon;
-	public static java.applet.AudioClip backGroundMusic;
-
+	public static AudioClip backGroundMusic;
+	public static AudioClip bonusTimeMusic;
 	static {
 		ClassLoader loader = Resource.class.getClassLoader();
 		try {
@@ -49,6 +49,7 @@ public class Resource {
 			bg7 = ImageIO.read(loader.getResource("res/bg7.jpg"));
 			howToPlay = ImageIO.read(loader.getResource("res/HowToPlay.jpg"));
 			titleSong = Applet.newAudioClip((loader.getResource("res/titlesong.wav")).toURI().toURL());
+			bonusTimeMusic = Applet.newAudioClip((loader.getResource("res/bonusTimeMusic.wav")).toURI().toURL());
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
