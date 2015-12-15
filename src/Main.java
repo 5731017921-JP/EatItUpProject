@@ -111,7 +111,7 @@ public class Main {
 
 				frame.add(titlePanel);
 				frame.pack();
-				while (!logic.isGameOver()) {
+				while (!logic.isGameOver()&&!logic.isTimeOut()) {
 					try {
 						Thread.sleep(20);
 					} catch (InterruptedException e1) {

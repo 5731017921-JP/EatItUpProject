@@ -1,11 +1,11 @@
 import resource.Resource;
 
 public class GameLogic {
-	private Student student1,student2;
+	private Student student1, student2;
 	private Teacher teacher;
-	private Noodles noodles1,noodles2;
-	private Thread timeCount,lookableTeacher,bonusTimeAble;
-	private boolean gameOver,bonusTime,timeOut;
+	private Noodles noodles1, noodles2;
+	private Thread timeCount, lookableTeacher, bonusTimeAble;
+	private boolean gameOver, bonusTime, timeOut;
 
 	public Thread getBonusTimeAble() {
 		return bonusTimeAble;
@@ -14,6 +14,7 @@ public class GameLogic {
 	public void setBonusTimeAble(Thread bonusTimeAble) {
 		this.bonusTimeAble = bonusTimeAble;
 	}
+
 	public boolean isBonusTime() {
 		return bonusTime;
 	}
@@ -21,7 +22,6 @@ public class GameLogic {
 	public void setBonusTime(boolean bonusTime) {
 		this.bonusTime = bonusTime;
 	}
-
 
 	public Thread getTimeCount() {
 		return timeCount;
@@ -91,13 +91,13 @@ public class GameLogic {
 						e.printStackTrace();
 					}
 					if (getTeacher().getCounter() > 0) {
-						getTeacher().setCounter(getTeacher().getCounter()-1);
+						getTeacher().setCounter(getTeacher().getCounter() - 1);
 					} else {
 						getTeacher().setStateChangingDelay(Teacher.random(150, 300));
 						getTeacher().setCounter(getTeacher().getStateChangingDelay());
 						getTeacher().setLooking(!getTeacher().isLooking);
 						if (getTeacher().isLooking) {
-							getTeacher().setSwitching(getTeacher().getSwitching()+1);
+							getTeacher().setSwitching(getTeacher().getSwitching() + 1);
 						}
 					}
 					if (gameOver || timeOut) {
@@ -152,6 +152,8 @@ public class GameLogic {
 					} else if (activate) {
 						try {
 							Thread.sleep(15000);
+							Resource.bonusTimeMusic.stop();
+							Resource.backGroundMusic.play();
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -159,15 +161,16 @@ public class GameLogic {
 					}
 					bonusTime = !bonusTime;
 					activate = !activate;
-					if(activate){
+					if (activate) {
 						GameScreen.popup = new PopUp();
 						Thread popUpThread = new Thread(new Runnable() {
-							
+
 							@Override
 							public void run() {
 								// TODO Auto-generated method stub
-								
-								for(int i = 0;i< 25000000;i++){
+								Resource.backGroundMusic.stop();
+								Resource.bonusTimeMusic.play();
+								for (int i = 0; i < 5000000; i++) {
 									synchronized (GameScreen.popup) {
 										student1.setEating(false);
 										student2.setEating(false);
@@ -180,7 +183,7 @@ public class GameLogic {
 						});
 						popUpThread.start();
 					}
-					System.out.println(bonusTime);
+
 					if (gameOver) {
 						bonusTime = false;
 						break;
@@ -266,14 +269,40 @@ public class GameLogic {
 
 	public String winnerName() {
 		if (Main.selectedMode == 3) {
-			if (getStudent1().getScore() > getStudent2().getScore()) {
-				return "blossom";
-			} else if (getStudent1().getScore() < getStudent2().getScore()) {
-				return "buttercup";
+
+			if (isGameOver()) {
+				if (getStudent1().getLife() > 0)
+					return "res/Ending_blossomwin.jpg";
+				else
+					return "res/Ending_buttercupwin.jpg";
 			} else {
-				return "equal";
+				if (getStudent1().getScore() > getStudent2().getScore()) {
+					return "res/Ending_blossomwin.jpg";
+				} else if (getStudent1().getScore() < getStudent2().getScore()) {
+					return "res/Ending_buttercupwin.jpg";
+				} else {
+					if (getStudent1().getLife() > getStudent2().getLife())
+						return "res/Ending_blossomwin.jpg";
+					else if (getStudent1().getScore() < getStudent2().getScore())
+						return "res/Ending_buttercupwin.jpg";
+					else
+						return "res/Ending_equalwin.jpg";
+				}
 			}
-		} else
-			return "no";
+		}
+		else{
+			if(isGameOver()){
+				return "res/Ending_gameover.jpg";
+			}
+			else return "res/Ending_nowin.jpg";
+		}
+	}
+
+	public boolean isTimeOut() {
+		return timeOut;
+	}
+
+	public void setTimeOut(boolean timeOut) {
+		this.timeOut = timeOut;
 	}
 }

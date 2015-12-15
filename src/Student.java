@@ -4,6 +4,8 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
+import resource.Resource;
+
 public class Student implements IRenderable {
 	private boolean lifeDecreased, eating;
 	private int life, id, score;

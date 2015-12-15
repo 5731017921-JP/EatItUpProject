@@ -113,7 +113,7 @@ public class GameScreen extends JPanel {
 		g2d.setFont(font);
 		if (Main.selectedMode == 3 || Main.selectedMode == 1) {
 			g2d.setColor(Color.white);
-			g2d.drawString("Blossom : " + logic.getStudent1().getScore(), 200, 90);
+			g2d.drawString("Blossom:" + logic.getStudent1().getScore(), 200, 90);
 			g2d.setColor(Color.darkGray);
 			g2d.drawString("life:" + logic.getStudent1().getLife(), 5, 475);
 			logic.getTeacher();
@@ -121,7 +121,7 @@ public class GameScreen extends JPanel {
 		}
 		if (Main.selectedMode == 3 || Main.selectedMode == 2) {
 			g2d.setColor(Color.white);
-			g2d.drawString("Buttercup : " + logic.getStudent2().getScore(), 200, 150);
+			g2d.drawString("Buttercup:" + logic.getStudent2().getScore(), 200, 150);
 			g2d.setColor(Color.darkGray);
 
 			g2d.drawString("life:" + logic.getStudent2().getLife(), 625, 475);

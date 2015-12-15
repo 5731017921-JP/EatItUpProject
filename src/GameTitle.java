@@ -54,7 +54,7 @@ public class GameTitle extends JPanel {
 					paintDelayCount();
 				} else {
 					g2d.drawImage(Resource.bg7, null, 0, 0);
-					paintDelayCount();
+			
 				}
 			}
 		}

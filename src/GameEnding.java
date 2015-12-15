@@ -17,6 +17,7 @@ public class GameEnding extends JPanel {
 	private int paintCounter;
 	private GameLogic gameLogic;
 	public static BufferedImage winnerDeclarationScence;
+
 	public GameLogic getGameLogic() {
 		return gameLogic;
 	}
@@ -28,14 +29,13 @@ public class GameEnding extends JPanel {
 		requestFocus();
 		this.gameLogic = gameLogic;
 		ClassLoader loader = Main.class.getClassLoader();
-		try{
-			winnerDeclarationScence = ImageIO.read(loader.getResource("Ending_" + gameLogic.winnerName() + "win.jpg"));	
-		}
-		catch (Exception e){
-			
+		try {
+			winnerDeclarationScence = ImageIO.read(loader.getResource(gameLogic.winnerName()));
+		} catch (Exception e) {
+
 		}
 		paintCounter = 0;
-		
+
 	}
 
 	public void paintComponent(Graphics g) {
@@ -46,9 +46,7 @@ public class GameEnding extends JPanel {
 			paintCounter++;
 		} else {
 			Resource.cryingSound.stop();
-			if(gameLogic.isGameOver())
-				g2d.drawImage(Resource.gameOverScence, null, 0, 0);
-			else g2d.drawImage(winnerDeclarationScence, null, 0, 0);
+			g2d.drawImage(winnerDeclarationScence, null, 0, 0);
 		}
 	}
 }

@@ -6,6 +6,8 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
+import sun.applet.AppletAudioClip;
+
 public class Resource {
 	public static BufferedImage bg1;
 	public static BufferedImage bg2;
@@ -25,6 +27,7 @@ public class Resource {
 	public static BufferedImage classroomBG, table, staticBook,bonusTimeIcon;
 	public static AudioClip backGroundMusic;
 	public static AudioClip bonusTimeMusic;
+	public static AudioClip wrong;
 	static {
 		ClassLoader loader = Resource.class.getClassLoader();
 		try {
@@ -46,9 +49,10 @@ public class Resource {
 			bg4 = ImageIO.read(loader.getResource("res/bg4.jpg"));
 			bg5 = ImageIO.read(loader.getResource("res/bg5.png"));
 			bg6 = ImageIO.read(loader.getResource("res/bg6.jpg"));
-			bg7 = ImageIO.read(loader.getResource("res/bg7.jpg"));
+			bg7 = ImageIO.read(loader.getResource("res/bg7.png"));
 			howToPlay = ImageIO.read(loader.getResource("res/HowToPlay.jpg"));
 			titleSong = Applet.newAudioClip((loader.getResource("res/titlesong.wav")).toURI().toURL());
+			wrong = Applet.newAudioClip(loader.getResource("res/Wrong.wav"));
 			bonusTimeMusic = Applet.newAudioClip((loader.getResource("res/bonusTimeMusic.wav")).toURI().toURL());
 		} catch (Exception e1) {
 			e1.printStackTrace();
